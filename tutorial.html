@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works - WeBuyPhones</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blue: #0071E3;
+            --dark: #1D1D1F;
+            --gray: #86868B;
+            --light: #F5F5F7;
+            --green: #34C759;
+            --red: #FF3B30;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', sans-serif;
+            background: #fff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           MOBILE NAVIGATION - Bottom Bar (DEFAULT)
+           ============================================ */
+        nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 9999;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            padding-bottom: env(safe-area-inset-bottom, 0);
+        }
+
+        .nav-inner {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            padding: 12px 16px;
+        }
+
+        .logo {
+            display: none;
+        }
+
+        .nav-links {
+            display: contents;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px;
+            min-height: 56px;
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 500;
+            border-radius: 12px;
+            transition: all 0.2s;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .nav-item:active {
+            transform: scale(0.95);
+            background: var(--light);
+        }
+
+        .nav-item.active {
+            color: var(--blue);
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            stroke-width: 2;
+        }
+
+        .nav-actions {
+            display: none;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--dark) 0%, #2D2D2F 100%);
+            padding: 80px 24px 60px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+        }
+
+        .hero p {
+            font-size: clamp(1.125rem, 4vw, 1.5rem);
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 24px 120px;
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: clamp(1.75rem, 6vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: clamp(1rem, 4vw, 1.3125rem);
+            color: var(--gray);
+            margin-bottom: 48px;
+        }
+
+        .process-steps {
+            display: grid;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 32px 24px;
+            background: var(--light);
+            border-radius: 20px;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 auto 24px;
+        }
+
+        .step-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .step-description {
+            font-size: 16px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .info-grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        .info-card {
+            background: var(--light);
+            padding: 28px 24px;
+            border-radius: 20px;
+        }
+
+        .info-card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .info-card p, .info-card ul {
+            font-size: 16px;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .info-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-card ul li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .info-card ul li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        .grade-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 32px 0;
+            display: block;
+            overflow-x: auto;
+        }
+
+        .grade-table th,
+        .grade-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .grade-table th {
+            background: var(--light);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .grade-table td {
+            font-size: 15px;
+        }
+
+        .grade-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .grade-excellent {
+            background: rgba(52, 199, 89, 0.1);
+            color: var(--green);
+        }
+
+        .grade-likenew {
+            background: rgba(0, 113, 227, 0.1);
+            color: var(--blue);
+        }
+
+        .grade-good {
+            background: rgba(255, 149, 0, 0.1);
+            color: #FF9500;
+        }
+
+        .faq-section {
+            max-width: 100%;
+        }
+
+        .faq-item {
+            margin-bottom: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            background: var(--light);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 16px;
+            transition: background 0.3s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .faq-question:active {
+            background: #EBEBED;
+        }
+
+        .faq-question::after {
+            content: "+";
+            font-size: 24px;
+            font-weight: 400;
+            transition: transform 0.3s;
+            flex-shrink: 0;
+            margin-left: 12px;
+        }
+
+        .faq-question.active::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 20px;
+            font-size: 15px;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .faq-answer.active {
+            max-height: 500px;
+            padding: 20px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--blue) 0%, #0077ED 100%);
+            padding: 40px 24px;
+            border-radius: 24px;
+            color: white;
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .highlight-box h3 {
+            font-size: clamp(1.5rem, 5vw, 2.25rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .highlight-box p {
+            font-size: clamp(1rem, 3vw, 1.1875rem);
+            opacity: 0.9;
+        }
+
+        footer {
+            background: var(--light);
+            padding: 60px 24px 100px;
+            margin-top: 60px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            opacity: 0.6;
+            text-transform: uppercase;
+        }
+
+        .footer-col a {
+            display: flex;
+            align-items: center;
+            min-height: 44px;
+            color: var(--dark);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 8px;
+            opacity: 0.8;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            font-size: 12px;
+            opacity: 0.6;
+        }
+
+        /* ============================================
+           DESKTOP STYLES (768px AND UP)
+           ============================================ */
+        @media (min-width: 768px) {
+            /* DESKTOP NAVIGATION - Top Bar */
+            nav {
+                position: fixed;
+                top: 0;
+                bottom: auto;
+                border-top: none;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+                padding-bottom: 0;
+            }
+
+            .nav-inner {
+                grid-template-columns: auto 1fr auto;
+                padding: 0 22px;
+                height: 44px;
+                align-items: center;
+                max-width: 1000px;
+                margin: 0 auto;
+                gap: 0;
+            }
+
+            .logo {
+                display: block;
+                font-size: 17px;
+                font-weight: 600;
+                letter-spacing: -0.3px;
+                cursor: pointer;
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 40px;
+                justify-content: center;
+            }
+
+            .nav-item {
+                flex-direction: row;
+                min-height: auto;
+                padding: 0;
+                font-size: 12px;
+                opacity: 0.8;
+            }
+
+            .nav-item:hover {
+                opacity: 1;
+            }
+
+            .nav-item:active {
+                transform: none;
+                background: none;
+            }
+
+            .nav-icon {
+                display: none;
+            }
+
+            .nav-actions {
+                display: flex;
+                gap: 20px;
+            }
+
+            .icon {
+                opacity: 0.6;
+                cursor: pointer;
+                transition: opacity 0.3s;
+            }
+
+            .icon:hover {
+                opacity: 1;
+            }
+
+            .hero {
+                margin-top: 44px;
+                padding: 100px 22px 80px;
+            }
+
+            .hero h1 {
+                font-size: 64px;
+                letter-spacing: -2.5px;
+            }
+
+            .hero p {
+                font-size: 24px;
+            }
+
+            .container {
+                padding: 80px 22px;
+            }
+
+            .section {
+                margin-bottom: 100px;
+            }
+
+            .section-title {
+                font-size: 48px;
+                letter-spacing: -2px;
+            }
+
+            .section-subtitle {
+                font-size: 21px;
+                margin-bottom: 60px;
+            }
+
+            .process-steps {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 40px;
+            }
+
+            .step-card {
+                padding: 40px 24px;
+            }
+
+            .step-title {
+                font-size: 24px;
+            }
+
+            .step-description {
+                font-size: 16px;
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+
+            .info-card {
+                padding: 32px;
+            }
+
+            .info-card h3 {
+                font-size: 24px;
+            }
+
+            .info-card p, .info-card ul {
+                font-size: 16px;
+            }
+
+            .grade-table {
+                display: table;
+            }
+
+            .grade-table th,
+            .grade-table td {
+                padding: 20px;
+            }
+
+            .grade-table th {
+                font-size: 15px;
+            }
+
+            .grade-table td {
+                font-size: 16px;
+            }
+
+            .faq-section {
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            .faq-question {
+                padding: 20px 24px;
+                font-size: 17px;
+            }
+
+            .faq-question:hover {
+                background: #EBEBED;
+            }
+
+            .faq-question:active {
+                background: #EBEBED;
+            }
+
+            .faq-answer {
+                padding: 0 24px;
+                font-size: 16px;
+            }
+
+            .faq-answer.active {
+                padding: 20px 24px;
+            }
+
+            .highlight-box {
+                padding: 48px;
+            }
+
+            .highlight-box h3 {
+                font-size: 36px;
+            }
+
+            .highlight-box p {
+                font-size: 19px;
+            }
+
+            footer {
+                padding: 60px 22px 40px;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 40px;
+                max-width: 1000px;
+                margin: 0 auto 40px;
+            }
+
+            .footer-col h4 {
+                font-size: 12px;
+            }
+
+            .footer-col a {
+                font-size: 12px;
+                min-height: auto;
+                cursor: pointer;
+                transition: opacity 0.3s;
+            }
+
+            .footer-col a:hover {
+                opacity: 1;
+            }
+        }
+
+        *:focus-visible {
+            outline: 2px solid var(--blue);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <div class="logo" onclick="window.location.href='index.html'">WeBuyPhones</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="shop.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span>Shop</span>
+                </a>
+                <a href="sell.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 6v6l4 2"></path>
+                    </svg>
+                    <span>Sell</span>
+                </a>
+                <a href="tutorial.html" class="nav-item active">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 16v-4"></path>
+                        <path d="M12 8h.01"></path>
+                    </svg>
+                    <span>How It Works</span>
+                </a>
+                <a href="about.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>About</span>
+                </a>
+            </div>
+            <div class="nav-actions">
+                <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>How It Works</h1>
+        <p>Everything you need to know about buying and selling with WeBuyPhones</p>
+    </div>
+
+    <div class="container">
+        <!-- Buying Process -->
+        <div class="section">
+            <h2 class="section-title">How to Buy</h2>
+            <p class="section-subtitle">Get premium devices at unbeatable prices in three simple steps</p>
+
+            <div class="process-steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Browse & Select</h3>
+                    <p class="step-description">Browse our collection of certified pre-owned devices. Filter by brand, model, storage, and condition.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Secure Checkout</h3>
+                    <p class="step-description">Add to cart and checkout securely. We accept all major payment methods with encrypted transactions.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Receive & Enjoy</h3>
+                    <p class="step-description">Get your device with free shipping. Enjoy your purchase with our 12-month warranty and 30-day returns.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Selling Process -->
+        <div class="section">
+            <h2 class="section-title">How to Sell</h2>
+            <p class="section-subtitle">Turn your device into cash quickly and easily</p>
+
+            <div class="process-steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Get Quote</h3>
+                    <p class="step-description">Fill out our simple form with your device details and condition. Get an instant estimated value.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Ship Free</h3>
+                    <p class="step-description">We'll email you a prepaid shipping label. Pack your device securely and drop it off at any courier.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Get Paid</h3>
+                    <p class="step-description">Once inspected and approved, receive payment within 24 hours via your chosen method.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Device Grading System -->
+        <div class="section">
+            <h2 class="section-title">Our Grading System</h2>
+            <p class="section-subtitle">Every device is professionally inspected and graded</p>
+
+            <table class="grade-table">
+                <thead>
+                    <tr>
+                        <th>Grade</th>
+                        <th>Condition</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="grade-badge grade-excellent">Excellent</span></td>
+                        <td>Like Brand New</td>
+                        <td>Perfect condition with no visible scratches or marks. Battery health 95%+. Fully functional with all original features working flawlessly.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="grade-badge grade-likenew">Like New</span></td>
+                        <td>Minimal Wear</td>
+                        <td>Very light signs of use with minimal micro-scratches. Battery health 85-94%. All functions work perfectly. Barely noticeable wear.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="grade-badge grade-good">Good</span></td>
+                        <td>Light Usage Signs</td>
+                        <td>Light scratches or marks from normal use. Battery health 80-84%. All functions work perfectly. Cosmetic wear only.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Warranty & Protection -->
+        <div class="section">
+            <h2 class="section-title">Warranty & Protection</h2>
+            <p class="section-subtitle">Every purchase is protected</p>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>12-Month Warranty</h3>
+                    <p>All devices come with comprehensive 12-month warranty coverage:</p>
+                    <ul>
+                        <li>Hardware defects and malfunctions</li>
+                        <li>Battery performance issues</li>
+                        <li>Screen defects</li>
+                        <li>Camera and sensor failures</li>
+                        <li>Button functionality</li>
+                        <li>Charging port issues</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>What's Not Covered</h3>
+                    <ul>
+                        <li>Physical damage from drops or impacts</li>
+                        <li>Water or liquid damage</li>
+                        <li>Unauthorized repairs or modifications</li>
+                        <li>Cosmetic wear from normal use</li>
+                        <li>Lost or stolen devices</li>
+                        <li>Software issues (we provide support)</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>30-Day Money Back</h3>
+                    <p>Not completely satisfied? Return your device within 30 days for a full refund. No questions asked.</p>
+                    <ul>
+                        <li>Full refund guaranteed</li>
+                        <li>Free return shipping label</li>
+                        <li>Simple return process</li>
+                        <li>Refund within 3-5 business days</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>How to Claim Warranty</h3>
+                    <ul>
+                        <li>Contact us via email or phone</li>
+                        <li>Provide order number and issue description</li>
+                        <li>Send device with prepaid label</li>
+                        <li>Repair or replacement within 7 days</li>
+                        <li>Express shipping back to you</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shipping & Delivery -->
+        <div class="section">
+            <h2 class="section-title">Shipping & Delivery</h2>
+            <p class="section-subtitle">Fast and secure shipping across Europe</p>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Delivery Times</h3>
+                    <ul>
+                        <li>Poland: 1-2 business days</li>
+                        <li>EU Countries: 3-5 business days</li>
+                        <li>Express shipping available</li>
+                        <li>Real-time tracking included</li>
+                        <li>Signature required for delivery</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>Shipping Costs</h3>
+                    <ul>
+                        <li>Free standard shipping on orders over €100</li>
+                        <li>Standard shipping: €9.99</li>
+                        <li>Express shipping: €19.99</li>
+                        <li>International rates vary by location</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>Packaging Standards</h3>
+                    <ul>
+                        <li>Eco-friendly packaging materials</li>
+                        <li>Double-boxed for protection</li>
+                        <li>Bubble wrap and cushioning</li>
+                        <li>Sealed with tamper-evident tape</li>
+                        <li>Fully insured during transit</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>Track Your Order</h3>
+                    <ul>
+                        <li>Tracking number emailed upon shipping</li>
+                        <li>Real-time updates</li>
+                        <li>SMS notifications available</li>
+                        <li>Estimated delivery date</li>
+                        <li>Contact us for any delivery issues</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <h3>100% Secure Payments</h3>
+            <p>All transactions are encrypted with SSL technology. We never store your card details. Your data is protected with bank-level security.</p>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="section faq-section">
+            <h2 class="section-title" style="text-align: center;">Frequently Asked Questions</h2>
+            <p class="section-subtitle" style="text-align: center;">Got questions? We've got answers</p>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Are all devices genuine and original?
+                </div>
+                <div class="faq-answer">
+                    Yes, all devices sold on WeBuyPhones are 100% genuine and authentic. We verify every device's IMEI and serial number to ensure authenticity. We do not sell refurbished devices with aftermarket parts.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    How do you test devices?
+                </div>
+                <div class="faq-answer">
+                    Every device undergoes a comprehensive 50-point inspection by certified technicians. We test display, battery, cameras, buttons, biometrics, connectivity, speakers, microphone, and more. Full diagnostic reports are kept for every device.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    What if I receive a faulty device?
+                </div>
+                <div class="faq-answer">
+                    Contact us immediately if you receive a faulty device. We'll provide a prepaid return label and either send a replacement device or issue a full refund. Our 12-month warranty covers all hardware defects.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Can I visit your physical store?
+                </div>
+                <div class="faq-answer">
+                    Yes! We have a physical retail store in Warsaw, Poland where you can browse devices, get expert advice, and make purchases in person. Visit our About page for store location and hours.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Do you accept broken or damaged devices?
+                </div>
+                <div class="faq-answer">
+                    Yes, we buy devices in all conditions including broken, cracked screens, or water damaged. The offered price will reflect the device's condition. Contact us for a quote on damaged devices.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    How long does the selling process take?
+                </div>
+                <div class="faq-answer">
+                    From submission to payment typically takes 5-7 business days. This includes shipping time (2-3 days), inspection (1-2 days), and payment processing (1-2 days). Express options available.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    When will I receive payment for my device?
+                </div>
+                <div class="faq-answer">
+                    Once your device passes inspection and is approved, payment is processed within 24 hours. Funds arrive via your chosen method: PayPal (instant), bank transfer (1-2 days), or check (5-7 days).
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Is my personal data removed from devices?
+                </div>
+                <div class="faq-answer">
+                    Absolutely. Every device undergoes professional data wiping using military-grade software. We ensure all previous owner data is permanently and securely erased before resale. We follow GDPR compliance standards.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    What payment methods do you accept?
+                </div>
+                <div class="faq-answer">
+                    We accept Visa, Mastercard, American Express, PayPal, bank transfers, and BLIK (for Polish customers). All payments are processed securely with encryption.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Can I cancel my order?
+                </div>
+                <div class="faq-answer">
+                    Yes, you can cancel your order before it ships for a full refund. Once shipped, you can still return the device within 30 days under our money-back guarantee.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Do devices come unlocked?
+                </div>
+                <div class="faq-answer">
+                    Most of our devices are factory unlocked and work with all carriers. If a device is carrier-locked, this will be clearly stated in the product description before purchase.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    What's included with each device?
+                </div>
+                <div class="faq-answer">
+                    Each device comes with a compatible charging cable. Original boxes and accessories are included when available (indicated in product listing). All devices come in protective packaging.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    How can I contact customer support?
+                </div>
+                <div class="faq-answer">
+                    Email us at support@webuyphones.com, call +48 22 123 4567, or visit our physical store in Warsaw. Our support team is available Monday-Friday 9:00-18:00 CET.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Shop</h4>
+                <a href="shop.html#iphone">iPhone</a>
+                <a href="shop.html#macbook">Mac</a>
+                <a href="shop.html#ipad">iPad</a>
+                <a href="shop.html#imac">iMac</a>
+            </div>
+            <div class="footer-col">
+                <h4>Sell</h4>
+                <a href="sell.html">Get Quote</a>
+                <a href="tutorial.html">How It Works</a>
+                <a>Guide</a>
+                <a>Pricing</a>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <a href="about.html">About</a>
+                <a href="tutorial.html">Support</a>
+                <a>Careers</a>
+                <a>Press</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+                <a href="tutorial.html">Returns</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a>Support</a>
+                <a>Email</a>
+                <a>Phone</a>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2025 WeBuyPhones. All rights reserved.</div>
+    </footer>
+
+    <script>
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const isActive = answer.classList.contains('active');
+            
+            // Close all FAQs
+            document.querySelectorAll('.faq-answer').forEach(ans => {
+                ans.classList.remove('active');
+            });
+            document.querySelectorAll('.faq-question').forEach(q => {
+                q.classList.remove('active');
+            });
+            
+            // Open clicked FAQ if it wasn't active
+            if (!isActive) {
+                answer.classList.add('active');
+                element.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
