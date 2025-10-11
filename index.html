@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
+    <title>WeSelliPhones - Premium Certified Devices</title>
+    <style>
+        /* ===== RESET ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blue: #0071E3;
+            --dark: #1D1D1F;
+            --gray: #86868B;
+            --light: #F5F5F7;
+            --green: #34C759;
+            --red: #FF3B30;
+        }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', sans-serif;
+            background: #fff;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           MODERN MOBILE NAVIGATION - BLACK SLEEK BAR
+           ============================================ */
+        
+        nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 9999;
+            padding: 8px 12px calc(env(safe-area-inset-bottom, 0px) + 8px);
+            box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+            gap: 4px;
+        }
+
+        .logo {
+            display: none;
+        }
+
+        .nav-links {
+            display: contents;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 8px 12px;
+            min-height: 48px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+            flex: 1;
+            max-width: 80px;
+        }
+
+        .nav-item:active {
+            transform: scale(0.92);
+        }
+
+        .nav-item.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 3px;
+            background: var(--blue);
+            border-radius: 0 0 3px 3px;
+        }
+
+        .nav-icon {
+            width: 22px;
+            height: 22px;
+            stroke-width: 2.5;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        .nav-actions {
+            display: none;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            background: var(--red);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        /* MOBILE HERO */
+        .hero {
+            min-height: 100dvh;
+            background: linear-gradient(180deg, #000 0%, #0a0e1a 40%, #001428 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 24px 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 80% 60% at 50% 20%, rgba(0, 113, 227, 0.25) 0%, transparent 50%),
+                radial-gradient(circle 60% at 80% 50%, rgba(138, 43, 226, 0.15) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            animation: fadeUp 0.8s ease-out;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+        }
+
+        .hero p {
+            font-size: clamp(1.25rem, 4vw, 1.5rem);
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 48px;
+        }
+
+        .hero-devices {
+            display: grid;
+            gap: 24px;
+        }
+
+        .hero-device {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .device-image-container {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+        }
+
+        .device-image-container img {
+            width: 85%;
+            height: 85%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.4));
+        }
+
+        .stock-badge {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(52, 199, 89, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(52, 199, 89, 0.3);
+            color: rgba(255, 255, 255, 0.95);
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .device-info {
+            padding: 28px 24px 32px;
+            color: #fff;
+        }
+
+        .device-name {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+            line-height: 1.1;
+        }
+
+        .device-specs {
+            font-size: 15px;
+            opacity: 0.7;
+            margin-bottom: 24px;
+        }
+
+        .price-container {
+            margin-bottom: 24px;
+        }
+
+        .retail-price {
+            font-size: 14px;
+            color: var(--red);
+            text-decoration: line-through;
+            opacity: 0.8;
+            margin-bottom: 6px;
+        }
+
+        .sale-price {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--green);
+            line-height: 1;
+        }
+
+        .savings-badge {
+            display: inline-block;
+            background: rgba(52, 199, 89, 0.15);
+            color: var(--green);
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--blue);
+            color: #fff;
+            padding: 16px 32px;
+            min-height: 48px;
+            border-radius: 999px;
+            border: none;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            -webkit-tap-highlight-color: transparent;
+            width: 100%;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 60px 24px 120px;
+        }
+
+        .container {
+            max-width: 100%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: clamp(1.125rem, 4vw, 1.5rem);
+            color: var(--gray);
+        }
+
+        /* CATALOG */
+        .catalog-scroll {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding: 16px 0;
+        }
+
+        .catalog-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .catalog-item {
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            text-align: center;
+            min-width: 120px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .catalog-icon {
+            width: 100px;
+            height: 100px;
+            background: var(--light);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+        }
+
+        .catalog-icon img {
+            width: 70%;
+            height: 70%;
+            object-fit: contain;
+        }
+
+        .catalog-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .catalog-badge {
+            font-size: 12px;
+            color: #FF6B35;
+            font-weight: 600;
+        }
+
+        /* PRODUCTS */
+        .product-grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        .product-card {
+            background: var(--light);
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        .product-img {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light);
+            position: relative;
+            padding: 40px;
+        }
+
+        .product-img img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+
+        .product-stock {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(52, 199, 89, 0.15);
+            color: var(--green);
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .product-details {
+            padding: 24px;
+            background: #fff;
+        }
+
+        .new-badge {
+            color: #FF6B35;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .product-name {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .product-desc {
+            font-size: 15px;
+            color: var(--gray);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .product-retail-price {
+            font-size: 14px;
+            color: var(--red);
+            text-decoration: line-through;
+            opacity: 0.8;
+            margin-bottom: 6px;
+        }
+
+        .product-sale-price {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 8px;
+        }
+
+        .product-savings {
+            font-size: 13px;
+            color: var(--green);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .product-actions {
+            display: grid;
+            gap: 12px;
+        }
+
+        .btn-learn, .btn-buy {
+            min-height: 48px;
+            padding: 14px 24px;
+            border-radius: 999px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-learn {
+            background: transparent;
+            color: var(--blue);
+        }
+
+        .btn-buy {
+            background: var(--blue);
+            color: #fff;
+        }
+
+        /* SELL SECTION */
+        .sell-section {
+            background: var(--light);
+            text-align: center;
+        }
+
+        .steps {
+            display: grid;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .step {
+            text-align: center;
+        }
+
+        .step-num {
+            width: 80px;
+            height: 80px;
+            background: var(--blue);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 700;
+            margin: 0 auto 24px;
+        }
+
+        .step h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .step p {
+            font-size: 17px;
+            color: var(--gray);
+        }
+
+        .btn-dark, .btn-light {
+            min-height: 56px;
+            padding: 18px 40px;
+            border-radius: 999px;
+            border: none;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-dark {
+            background: var(--dark);
+            color: #fff;
+        }
+
+        .btn-light {
+            background: #fff;
+            color: var(--blue);
+        }
+
+        /* CTA */
+        .cta-section {
+            background: linear-gradient(135deg, var(--blue) 0%, #0077ED 100%);
+            text-align: center;
+            color: #fff;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--light);
+            padding: 60px 24px 120px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            opacity: 0.6;
+            text-transform: uppercase;
+        }
+
+        .footer-col a {
+            display: flex;
+            align-items: center;
+            min-height: 44px;
+            color: var(--dark);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 8px;
+            opacity: 0.8;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            font-size: 12px;
+            opacity: 0.6;
+        }
+
+        /* CONTACT MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 24px;
+            padding: 40px 32px;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            animation: slideUp 0.3s;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: var(--light);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .contact-item-modal {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 16px;
+            margin-bottom: 16px;
+        }
+
+        .contact-icon-modal {
+            width: 48px;
+            height: 48px;
+            background: var(--blue);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-icon-modal svg {
+            width: 24px;
+            height: 24px;
+            stroke: #fff;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-label-modal {
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 4px;
+        }
+
+        .contact-value-modal {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .contact-value-modal a {
+            color: var(--blue);
+            text-decoration: none;
+        }
+
+        /* DESKTOP STYLES */
+        @media (min-width: 768px) {
+            nav {
+                position: fixed;
+                top: 0;
+                bottom: auto;
+                border-top: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 0;
+                background: rgba(0, 0, 0, 0.9);
+            }
+
+            .nav-inner {
+                grid-template-columns: auto 1fr auto;
+                padding: 0 22px;
+                height: 44px;
+                max-width: 1000px;
+                margin: 0 auto;
+                gap: 0;
+                display: grid;
+            }
+
+            .logo {
+                display: block;
+                font-size: 17px;
+                font-weight: 600;
+                letter-spacing: -0.3px;
+                cursor: pointer;
+                color: #fff;
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 32px;
+                justify-content: center;
+            }
+
+            .nav-item {
+                flex-direction: row;
+                min-height: auto;
+                padding: 0;
+                font-size: 12px;
+                max-width: none;
+            }
+
+            .nav-item::before {
+                display: none;
+            }
+
+            .nav-item:hover {
+                color: #fff;
+            }
+
+            .nav-item.active {
+                background: none;
+                color: #fff;
+            }
+
+            .nav-icon {
+                display: none;
+            }
+
+            .nav-actions {
+                display: flex;
+                gap: 20px;
+            }
+
+            .hero {
+                margin-top: 44px;
+                min-height: 100vh;
+                padding: 60px 22px;
+            }
+
+            .hero-devices {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 30px;
+            }
+
+            .hero-device:hover {
+                transform: translateY(-8px);
+            }
+
+            .btn:hover {
+                background: #0077ED;
+                transform: scale(1.05);
+            }
+
+            section {
+                padding: 120px 22px;
+            }
+
+            .container {
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
+
+            .product-card:hover {
+                transform: translateY(-12px);
+                box-shadow: 0 40px 80px rgba(0, 0, 0, 0.15);
+            }
+
+            .steps {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 60px;
+            }
+
+            footer {
+                padding: 60px 22px 40px;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        *:focus-visible {
+            outline: 2px solid var(--blue);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <div class="logo" onclick="window.location.href='index.html'">WeSelliPhones</div>
+            
+            <div class="nav-links">
+                <a href="index.html" class="nav-item active">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="shop.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span>Shop</span>
+                </a>
+                <a href="sell.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 6v6l4 2"></path>
+                    </svg>
+                    <span>Sell</span>
+                </a>
+                <a href="#" class="nav-item" id="cart-nav" onclick="goToCart(event)">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span>Cart</span>
+                    <div class="cart-badge" id="cart-badge" style="display: none;">0</div>
+                </a>
+                <a href="#" class="nav-item" onclick="openContactModal(event)">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>Contact</span>
+                </a>
+            </div>
+
+            <div class="nav-actions">
+                <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" style="opacity: 0.6; cursor: pointer;">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" style="opacity: 0.6; cursor: pointer;" onclick="goToCart(event)">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Premium certified<br>devices.</h1>
+            <p>Unbeatable prices. Complete confidence.</p>
+            
+            <div class="hero-devices" id="hero-devices">
+                <!-- Devices will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="section-header">
+            <h2 class="section-title">Shop</h2>
+            <p class="section-subtitle">Browse by category</p>
+        </div>
+        
+        <div class="catalog-scroll">
+            <div class="catalog-item" onclick="window.location.href='shop.html#iphone'">
+                <div class="catalog-icon">
+                    <img src="https://www.apple.com/v/iphone-17-pro/b/images/overview/contrast/iphone_17_pro__dwccrdina7qu_large_2x.jpg" alt="iPhone">
+                </div>
+                <div class="catalog-name">iPhone</div>
+                <div class="catalog-badge">New</div>
+            </div>
+            <div class="catalog-item" onclick="window.location.href='shop.html#galaxy'">
+                <div class="catalog-icon">
+                    <img src="https://images.samsung.com/za/smartphones/galaxy-s25-ultra/buy/product_color_silverBlue_PC.png" alt="Galaxy">
+                </div>
+                <div class="catalog-name">Galaxy</div>
+            </div>
+            <div class="catalog-item" onclick="window.location.href='shop.html#macbook'">
+                <div class="catalog-icon">
+                    <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=100&auto=format&fit=crop&q=80" alt="MacBook">
+                </div>
+                <div class="catalog-name">MacBook</div>
+            </div>
+            <div class="catalog-item" onclick="window.location.href='shop.html#ipad'">
+                <div class="catalog-icon">
+                    <img src="https://m-cdn.phonearena.com/images/article/162881-wide-two_1200/2025-iPads-will-potentially-be-the-first-Apple-devices-sporting-their-new-5G-chips.jpg" alt="iPad">
+                </div>
+                <div class="catalog-name">iPad</div>
+            </div>
+            <div class="catalog-item" onclick="window.location.href='shop.html#tv'">
+                <div class="catalog-icon">
+                    <img src="https://img.us.news.samsung.com/us/wp-content/uploads/2025/03/26095901/QN98QN990FFXZA_007_Front2_Graphite-Black-scaled.jpg" alt="TV">
+                </div>
+                <div class="catalog-name">Samsung TV</div>
+            </div>
+            <div class="catalog-item" onclick="window.location.href='shop.html#imac'">
+                <div class="catalog-icon">
+                    <img src="https://www.geeky-gadgets.com/wp-content/uploads/2025/02/larger-imac-rumors-2025-release-date_optimized.jpg" alt="iMac">
+                </div>
+                <div class="catalog-name">iMac</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="section-header">
+            <h2 class="section-title">Featured devices</h2>
+            <p class="section-subtitle">Certified quality. Incredible value.</p>
+        </div>
+
+        <div class="product-grid" id="product-grid">
+            <!-- Products will be populated by JavaScript -->
+        </div>
+    </section>
+
+    <section class="sell-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Turn your device into cash</h2>
+                <p class="section-subtitle">Get an instant quote. Free shipping. Fast payment.</p>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <h3>Get Your Quote</h3>
+                    <p>Answer a few questions about your device</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <h3>Ship It Free</h3>
+                    <p>We'll send you a prepaid label</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <h3>Get Paid Fast</h3>
+                    <p>Receive payment within 24 hours</p>
+                </div>
+            </div>
+
+            <button class="btn-dark" onclick="window.location.href='sell.html'">Start Selling</button>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Browse All Devices</h2>
+            <p>Explore our complete collection of certified pre-owned devices</p>
+            <a href="shop.html" class="btn-light">Shop Now</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Shop</h4>
+                    <a href="shop.html#iphone">iPhone</a>
+                    <a href="shop.html#macbook">Mac</a>
+                    <a href="shop.html#ipad">iPad</a>
+                    <a href="shop.html#imac">iMac</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Sell</h4>
+                    <a href="sell.html">Get Quote</a>
+                    <a href="tutorial.html">How It Works</a>
+                    <a href="tutorial.html">Guide</a>
+                    <a href="tutorial.html">Pricing</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="about.html">About</a>
+                    <a href="reviews.html">Reviews</a>
+                    <a href="#" onclick="openContactModal(event)">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="privacy.html">Privacy</a>
+                    <a href="terms.html">Terms</a>
+                    <a href="tutorial.html">Returns</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <a href="#" onclick="openContactModal(event)">Contact Us</a>
+                    <a href="tel:+13477533991">Phone</a>
+                    <a href="https://wa.me/3477533991" target="_blank">WhatsApp</a>
+                </div>
+            </div>
+            <div class="footer-bottom">© 2025 WeSelliPhones. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contact-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeContactModal()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <h2 class="modal-title">Contact & Support</h2>
+            
+            <div class="contact-item-modal">
+                <div class="contact-icon-modal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-label-modal">Email</div>
+                    <div class="contact-value-modal">
+                        <a href="mailto:support@weselliphones.net">support@weselliphones.net</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-item-modal">
+                <div class="contact-icon-modal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-label-modal">Phone</div>
+                    <div class="contact-value-modal">
+                        <a href="tel:+13477533991">+1 (347) 753-3991</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-item-modal">
+                <div class="contact-icon-modal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-label-modal">Address</div>
+                    <div class="contact-value-modal">New York, NY 10001, USA</div>
+                </div>
+            </div>
+
+            <div class="contact-item-modal" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: #fff;">
+                <div class="contact-icon-modal" style="background: rgba(255,255,255,0.2);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-label-modal" style="color: rgba(255,255,255,0.8);">WhatsApp</div>
+                    <div class="contact-value-modal">
+                        <a href="https://wa.me/13477533991" target="_blank" style="color: #fff;">Chat with us instantly</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Product data with fluctuating discounts (35-50%)
+        const heroDevices = [
+            {
+                name: 'iPhone 16 Pro Max',
+                specs: 'Black Titanium • 256GB • Unlocked',
+                retailPrice: 1199,
+                image: 'https://www.apple.com/newsroom/images/2024/09/apple-debuts-iphone-16-pro-and-iphone-16-pro-max/article/Apple-iPhone-16-Pro-hero-geo-240909_inline.jpg.large.jpg',
+                stock: 12
+            },
+            {
+                name: 'Galaxy S25 Ultra',
+                specs: 'Titanium Gray • 256GB • Unlocked',
+                retailPrice: 1300,
+                image: 'https://stg-images.samsung.com/is/image/samsung/assets/za/smartphones/galaxy-s24-ultra/images/hotfix4/galaxy-s24-ultra-highlights-form-factor-start-mo.jpg?imbypass=true',
+                stock: 18
+            },
+            {
+                name: 'MacBook Pro 16"',
+                specs: 'Space Black • M3 Pro • 512GB',
+                retailPrice: 2499,
+                image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&auto=format&fit=crop&q=80',
+                stock: 8
+            }
+        ];
+
+        const featuredProducts = [
+            {
+                name: 'iPhone 14 Pro',
+                specs: '256GB • Deep Purple • Unlocked',
+                desc: 'Advanced camera system. Dynamic Island. A powerhouse chip.',
+                retailPrice: 1099,
+                image: 'https://cdn.alloallo.media/catalog/product/apple/iphone/iphone-14-pro-max/iphone-14-pro-max-deep-purple.jpg',
+                stock: 15,
+                badge: 'New'
+            },
+            {
+                name: 'MacBook Air M2',
+                specs: '256GB • Midnight',
+                desc: 'Supercharged by M2. Remarkably thin and light.',
+                retailPrice: 1199,
+                image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=400&auto=format&fit=crop&q=80',
+                stock: 10,
+                badge: 'New'
+            },
+            {
+                name: 'iPad Pro 13"',
+                specs: 'M4 • 256GB • Space Black',
+                desc: 'The ultimate iPad experience. M4 chip delivers incredible power.',
+                retailPrice: 1299,
+                image: 'https://m-cdn.phonearena.com/images/article/162881-wide-two_1200/2025-iPads-will-potentially-be-the-first-Apple-devices-sporting-their-new-5G-chips.jpg',
+                stock: 7,
+                badge: 'New'
+            }
+        ];
+
+        // Calculate dynamic discount (35-50%)
+        function getRandomDiscount() {
+            return Math.floor(Math.random() * (50 - 35 + 1)) + 35;
+        }
+
+        function calculateSalePrice(retailPrice, discount) {
+            return Math.round(retailPrice * (1 - discount / 100));
+        }
+
+        // Render hero devices
+        function renderHeroDevices() {
+            const container = document.getElementById('hero-devices');
+            container.innerHTML = heroDevices.map(device => {
+                const discount = getRandomDiscount();
+                const salePrice = calculateSalePrice(device.retailPrice, discount);
+                const savings = device.retailPrice - salePrice;
+                
+                return `
+                    <div class="hero-device">
+                        <div class="device-image-container">
+                            <img src="${device.image}" alt="${device.name}">
+                            <div class="stock-badge">${device.stock} in stock</div>
+                        </div>
+                        <div class="device-info">
+                            <div class="device-name">${device.name}</div>
+                            <div class="device-specs">${device.specs}</div>
+                            <div class="price-container">
+                                <div class="retail-price">Retail $${device.retailPrice.toLocaleString()}</div>
+                                <div class="sale-price">$${salePrice}</div>
+                                <div class="savings-badge">Save ${discount}%</div>
+                            </div>
+                            <button class="btn" onclick='addToCart(${JSON.stringify({...device, salePrice, discount})})'>Add to Cart</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render featured products
+        function renderFeaturedProducts() {
+            const container = document.getElementById('product-grid');
+            container.innerHTML = featuredProducts.map(product => {
+                const discount = getRandomDiscount();
+                const salePrice = calculateSalePrice(product.retailPrice, discount);
+                const savings = product.retailPrice - salePrice;
+                
+                return `
+                    <div class="product-card">
+                        <div class="product-img">
+                            <div class="product-stock">${product.stock} in stock</div>
+                            <img src="${product.image}" alt="${product.name}">
+                        </div>
+                        <div class="product-details">
+                            ${product.badge ? `<div class="new-badge">${product.badge}</div>` : ''}
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-desc">${product.desc}</div>
+                            <div class="product-retail-price">Retail $${product.retailPrice.toLocaleString()}</div>
+                            <div class="product-sale-price">$${salePrice}</div>
+                            <div class="product-savings">Save $${savings.toLocaleString()} (${discount}%)</div>
+                            <div class="product-actions">
+                                <button class="btn-learn">Learn more</button>
+                                <button class="btn-buy" onclick='addToCart(${JSON.stringify({...product, salePrice, discount})})'>Buy</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Cart functionality
+        function getCart() {
+            return JSON.parse(localStorage.getItem('cart')) || [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartBadge();
+        }
+
+        function addToCart(product) {
+            const cart = getCart();
+            
+            // Check if product already exists
+            const existingIndex = cart.findIndex(item => 
+                item.name === product.name && item.specs === product.specs
+            );
+            
+            if (existingIndex > -1) {
+                // Increase quantity
+                cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
+            } else {
+                // Add new product
+                cart.push({
+                    ...product,
+                    quantity: 1,
+                    addedAt: Date.now()
+                });
+            }
+            
+            saveCart(cart);
+            showCartNotification(product.name);
+        }
+
+        function updateCartBadge() {
+            const cart = getCart();
+            const badge = document.getElementById('cart-badge');
+            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            
+            if (totalItems > 0) {
+                badge.textContent = totalItems;
+                badge.style.display = 'block';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        function showCartNotification(productName) {
+            // Simple notification (you can enhance this)
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 80px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0, 0, 0, 0.9);
+                color: #fff;
+                padding: 16px 24px;
+                border-radius: 12px;
+                z-index: 10001;
+                animation: slideDown 0.3s;
+            `;
+            notification.textContent = `✓ ${productName} added to cart`;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 2000);
+        }
+
+        function goToCart(event) {
+            event.preventDefault();
+            window.location.href = 'payment.html';
+        }
+
+        // Contact modal
+        function openContactModal(event) {
+            if (event) event.preventDefault();
+            document.getElementById('contact-modal').classList.add('active');
+        }
+
+        function closeContactModal() {
+            document.getElementById('contact-modal').classList.remove('active');
+        }
+
+        // Close modal on outside click
+        document.getElementById('contact-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeContactModal();
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderHeroDevices();
+            renderFeaturedProducts();
+            updateCartBadge();
+        });
+    </script>
+</body>
+</html>
