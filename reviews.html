@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Reviews - WeBuyPhones</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blue: #0071E3;
+            --dark: #1D1D1F;
+            --gray: #86868B;
+            --light: #F5F5F7;
+            --green: #34C759;
+            --red: #FF3B30;
+            --yellow: #FFCC00;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', sans-serif;
+            background: #fff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Mobile Navigation */
+        nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 9999;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            padding-bottom: env(safe-area-inset-bottom, 0);
+        }
+
+        .nav-inner {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            padding: 12px 16px;
+        }
+
+        .logo { display: none; }
+        .nav-links { display: contents; }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 4px;
+            min-height: 56px;
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 500;
+            border-radius: 12px;
+            transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .nav-item:active {
+            transform: scale(0.95);
+            background: var(--light);
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            stroke-width: 2;
+        }
+
+        .nav-actions { display: none; }
+
+        /* Header */
+        .header {
+            background: var(--dark);
+            padding: 80px 24px 40px;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 6vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+        }
+
+        .header p {
+            font-size: clamp(1rem, 3vw, 1.25rem);
+            opacity: 0.9;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 0 24px 40px;
+            margin-bottom: 40px;
+        }
+
+        .stats-container {
+            background: var(--light);
+            border-radius: 24px;
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        .overall-rating {
+            font-size: 72px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+
+        .stars {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .star {
+            color: var(--yellow);
+            font-size: 32px;
+        }
+
+        .total-reviews {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 32px;
+        }
+
+        .rating-breakdown {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .rating-row {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .rating-label {
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .rating-bar-container {
+            background: #e0e0e0;
+            border-radius: 8px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .rating-bar {
+            background: var(--yellow);
+            height: 100%;
+            transition: width 0.3s;
+        }
+
+        .rating-count {
+            font-size: 14px;
+            color: var(--gray);
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* Write Review Section */
+        .write-review-section {
+            padding: 0 24px 40px;
+            margin-bottom: 40px;
+        }
+
+        .write-review-card {
+            background: #fff;
+            border: 2px solid var(--blue);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .write-review-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .star-input {
+            font-size: 32px;
+            color: #e0e0e0;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .star-input.selected {
+            color: var(--yellow);
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: border 0.2s;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--blue);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            background: var(--blue);
+            color: #fff;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #0077ED;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 16px;
+            padding: 32px 24px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .modal-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            color: var(--red);
+        }
+
+        .modal-icon.success {
+            color: var(--green);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .modal-text {
+            font-size: 15px;
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+
+        .modal-btn {
+            background: var(--dark);
+            color: #fff;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .modal-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Filters */
+        .filters {
+            padding: 0 24px 32px;
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .filters::-webkit-scrollbar { display: none; }
+
+        .filter-btn {
+            flex-shrink: 0;
+            padding: 10px 20px;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 20px;
+            background: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .filter-btn.active {
+            background: var(--dark);
+            color: #fff;
+            border-color: var(--dark);
+        }
+
+        /* Reviews List */
+        .reviews-list {
+            padding: 0 24px 120px;
+        }
+
+        .review-card {
+            background: #fff;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .reviewer-info {
+            flex: 1;
+        }
+
+        .reviewer-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .review-date {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        .review-rating {
+            display: flex;
+            gap: 4px;
+        }
+
+        .review-rating .star {
+            font-size: 16px;
+        }
+
+        .star.empty {
+            color: #e0e0e0;
+        }
+
+        .review-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .review-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--dark);
+            margin-bottom: 16px;
+        }
+
+        .review-meta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .review-badge {
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .badge-verified {
+            background: rgba(52, 199, 89, 0.1);
+            color: var(--green);
+        }
+
+        .badge-device {
+            background: var(--light);
+            color: var(--gray);
+        }
+
+        .helpful-section {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        /* Desktop Styles */
+        @media (min-width: 768px) {
+            nav {
+                position: fixed;
+                top: 0;
+                bottom: auto;
+                border-top: none;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            }
+
+            .nav-inner {
+                grid-template-columns: auto 1fr auto;
+                padding: 0 22px;
+                height: 44px;
+                align-items: center;
+                max-width: 1000px;
+                margin: 0 auto;
+                gap: 0;
+            }
+
+            .logo {
+                display: block;
+                font-size: 17px;
+                font-weight: 600;
+                cursor: pointer;
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 40px;
+                justify-content: center;
+            }
+
+            .nav-item {
+                flex-direction: row;
+                min-height: auto;
+                padding: 0;
+                font-size: 12px;
+                opacity: 0.8;
+            }
+
+            .nav-item:hover { opacity: 1; }
+            .nav-item:active { transform: none; background: none; }
+            .nav-icon { display: none; }
+
+            .nav-actions {
+                display: flex;
+                gap: 20px;
+            }
+
+            .icon {
+                opacity: 0.6;
+                cursor: pointer;
+                transition: opacity 0.3s;
+            }
+
+            .icon:hover { opacity: 1; }
+
+            .header {
+                margin-top: 44px;
+                padding: 100px 22px 60px;
+            }
+
+            .header h1 {
+                font-size: 56px;
+            }
+
+            .header p {
+                font-size: 21px;
+            }
+
+            .stats-section {
+                max-width: 1000px;
+                margin: 0 auto 60px;
+                padding: 0 22px 40px;
+            }
+
+            .write-review-section {
+                max-width: 1000px;
+                margin: 0 auto 60px;
+                padding: 0 22px 40px;
+            }
+
+            .filters {
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 0 22px 40px;
+            }
+
+            .reviews-list {
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 0 22px 80px;
+            }
+
+            .review-card {
+                padding: 32px;
+                margin-bottom: 20px;
+            }
+        }
+
+        *:focus-visible {
+            outline: 2px solid var(--blue);
+            outline-offset: 2px;
+        }
+    </style>
+    <script src="reviews-data.js"></script>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <div class="logo" onclick="window.location.href='index.html'">WeBuyPhones</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="shop.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span>Shop</span>
+                </a>
+                <a href="sell.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 6v6l4 2"></path>
+                    </svg>
+                    <span>Sell</span>
+                </a>
+                <a href="tutorial.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 16v-4"></path>
+                        <path d="M12 8h.01"></path>
+                    </svg>
+                    <span>How It Works</span>
+                </a>
+                <a href="about.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>About</span>
+                </a>
+            </div>
+            <div class="nav-actions">
+                <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    <div class="header">
+        <h1>Customer Reviews</h1>
+        <p>See what our customers are saying</p>
+    </div>
+
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="overall-rating" id="overallRating">4.6</div>
+            <div class="stars">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star" style="opacity: 0.6;">★</span>
+            </div>
+            <div class="total-reviews" id="totalReviews">Based on 21 reviews</div>
+
+            <div class="rating-breakdown" id="ratingBreakdown">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <section class="write-review-section">
+        <div class="write-review-card">
+            <div class="write-review-title">Write a Review</div>
+            <form id="reviewForm">
+                <div class="form-group">
+                    <label class="form-label">Your Rating</label>
+                    <div class="star-rating" id="starRating">
+                        <span class="star-input" data-rating="1">★</span>
+                        <span class="star-input" data-rating="2">★</span>
+                        <span class="star-input" data-rating="3">★</span>
+                        <span class="star-input" data-rating="4">★</span>
+                        <span class="star-input" data-rating="5">★</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Review Title</label>
+                    <input type="text" class="form-input" id="reviewTitle" placeholder="Sum up your experience" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Your Review</label>
+                    <textarea class="form-textarea" id="reviewText" placeholder="Tell us about your experience" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Review</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Email Verification Modal -->
+    <div class="modal" id="emailModal">
+        <div class="modal-content">
+            <div class="modal-title">Verify Your Purchase</div>
+            <div class="modal-text">To submit a review, please enter the email address you used to make your purchase.</div>
+            <div class="form-group">
+                <input type="email" class="form-input" id="emailInput" placeholder="your@email.com" required>
+            </div>
+            <button class="submit-btn" id="verifyEmailBtn">Verify</button>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal" id="errorModal">
+        <div class="modal-content">
+            <svg class="modal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="15" y1="9" x2="9" y2="15"></line>
+                <line x1="9" y1="9" x2="15" y2="15"></line>
+            </svg>
+            <div class="modal-title">Unable to Verify Purchase</div>
+            <div class="modal-text">This email address is not associated with any purchases on our site. Only verified customers can leave reviews.</div>
+            <button class="modal-btn" onclick="closeErrorModal()">Okay</button>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <svg class="modal-icon success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <div class="modal-title">Thank You!</div>
+            <div class="modal-text">Your review has been submitted successfully and will appear on our site shortly.</div>
+            <button class="modal-btn" onclick="closeSuccessModal()">Close</button>
+        </div>
+    </div>
+
+    <div class="filters">
+        <button class="filter-btn active" onclick="filterReviews('all')">All Reviews</button>
+        <button class="filter-btn" onclick="filterReviews(5)">5 Stars</button>
+        <button class="filter-btn" onclick="filterReviews(4)">4 Stars</button>
+        <button class="filter-btn" onclick="filterReviews(3)">3 Stars</button>
+        <button class="filter-btn" onclick="filterReviews('critical')">Critical</button>
+        <button class="filter-btn" onclick="filterReviews('verified')">Verified</button>
+    </div>
+
+    <div class="reviews-list" id="reviewsList">
+        <!-- Populated by JavaScript -->
+    </div>
+
+    <script>
+        // Star rating selection
+        let selectedRating = 0;
+        const stars = document.querySelectorAll('.star-input');
+        
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                selectedRating = parseInt(star.dataset.rating);
+                updateStars();
+            });
+        });
+
+        function updateStars() {
+            stars.forEach((star, index) => {
+                if (index < selectedRating) {
+                    star.classList.add('selected');
+                } else {
+                    star.classList.remove('selected');
+                }
+            });
+        }
+
+        // Calculate rating statistics
+        function calculateStats() {
+            const ratings = publishedReviews.map(r => r.rating);
+            const total = ratings.length;
+            const sum = ratings.reduce((a, b) => a + b, 0);
+            const average = (sum / total).toFixed(1);
+            
+            const counts = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0};
+            ratings.forEach(r => counts[r]++);
+            
+            return { average, total, counts };
+        }
+
+        // Display rating breakdown
+        function displayRatingBreakdown() {
+            const stats = calculateStats();
+            const breakdown = document.getElementById('ratingBreakdown');
+            
+            document.getElementById('overallRating').textContent = stats.average;
+            document.getElementById('totalReviews').textContent = `Based on ${stats.total} reviews`;
+            
+            breakdown.innerHTML = '';
+            for (let i = 5; i >= 1; i--) {
+                const count = stats.counts[i];
+                const percentage = (count / stats.total * 100).toFixed(0);
+                
+                breakdown.innerHTML += `
+                    <div class="rating-row">
+                        <div class="rating-label">${i} stars</div>
+                        <div class="rating-bar-container">
+                            <div class="rating-bar" style="width: ${percentage}%"></div>
+                        </div>
+                        <div class="rating-count">${count}</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Display reviews
+        function displayReviews(reviews) {
+            const reviewsList = document.getElementById('reviewsList');
+            reviewsList.innerHTML = '';
+            
+            reviews.forEach(review => {
+                const stars = '★'.repeat(review.rating) + '★'.repeat(5 - review.rating).split('').map(() => '<span class="star empty">★</span>').join('');
+                
+                reviewsList.innerHTML += `
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="reviewer-info">
+                                <div class="reviewer-name">${review.reviewerName}</div>
+                                <div class="review-date">${review.date}</div>
+                            </div>
+                            <div class="review-rating">
+                                ${stars}
+                            </div>
+                        </div>
+                        <div class="review-title">${review.title}</div>
+                        <div class="review-text">${review.text}</div>
+                        <div class="review-meta">
+                            ${review.verified ? '<span class="review-badge badge-verified">✓ Verified Purchase</span>' : ''}
+                            <span class="review-badge badge-device">${review.device}</span>
+                        </div>
+                        <div class="helpful-section">${review.helpful} people found this helpful</div>
+                    </div>
+                `;
+            });
+        }
+
+        // Filter reviews
+        let currentFilter = 'all';
+        function filterReviews(filter) {
+            currentFilter = filter;
+            
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            let filtered = publishedReviews;
+            
+            if (filter === 'verified') {
+                filtered = publishedReviews.filter(r => r.verified);
+            } else if (filter === 'critical') {
+                filtered = publishedReviews.filter(r => r.rating <= 2);
+            } else if (typeof filter === 'number') {
+                filtered = publishedReviews.filter(r => r.rating === filter);
+            }
+            
+            displayReviews(filtered);
+        }
+
+        // Form submission
+        document.getElementById('reviewForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            if (selectedRating === 0) {
+                alert('Please select a rating');
+                return;
+            }
+            
+            // Show email verification modal
+            document.getElementById('emailModal').classList.add('active');
+        });
+
+        // Email verification
+        document.getElementById('verifyEmailBtn').addEventListener('click', () => {
+            const email = document.getElementById('emailInput').value.trim().toLowerCase();
+            
+            if (!email) {
+                alert('Please enter your email address');
+                return;
+            }
+            
+            // Check if email is in verified customers list
+            const customer = verifiedCustomers.find(c => c.email.toLowerCase() === email);
+            
+            document.getElementById('emailModal').classList.remove('active');
+            
+            if (customer) {
+                // Email verified - save review to localStorage
+                const newReview = {
+                    id: 'rev_' + Date.now(),
+                    rating: selectedRating,
+                    title: document.getElementById('reviewTitle').value,
+                    text: document.getElementById('reviewText').value,
+                    reviewerName: customer.name.split(' ')[0] + ' ' + customer.name.split(' ')[1].charAt(0) + '.',
+                    device: customer.device,
+                    verified: true,
+                    helpful: 0,
+                    date: 'Just now',
+                    email: email
+                };
+                
+                // Store in localStorage (temporary until synced to reviews-data.js)
+                const pendingReviews = JSON.parse(localStorage.getItem('pendingReviews') || '[]');
+                pendingReviews.push(newReview);
+                localStorage.setItem('pendingReviews', JSON.stringify(pendingReviews));
+                
+                console.log('Review submitted and saved to localStorage:', newReview);
+                console.log('Add this to reviews-data.js:', JSON.stringify(newReview, null, 2));
+                
+                // Show success modal
+                setTimeout(() => {
+                    document.getElementById('successModal').classList.add('active');
+                }, 300);
+            } else {
+                // Email not found
+                setTimeout(() => {
+                    document.getElementById('errorModal').classList.add('active');
+                }, 300);
+            }
+        });
+
+        function closeErrorModal() {
+            document.getElementById('errorModal').classList.remove('active');
+            // Reset form
+            document.getElementById('reviewForm').reset();
+            document.getElementById('emailInput').value = '';
+            selectedRating = 0;
+            updateStars();
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.remove('active');
+            // Reset form
+            document.getElementById('reviewForm').reset();
+            document.getElementById('emailInput').value = '';
+            selectedRating = 0;
+            updateStars();
+        }
+
+        // Close modals on background click
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+
+        // Initialize page
+        displayRatingBreakdown();
+        displayReviews(publishedReviews);
+        
+        // Show pending reviews count in console
+        const pendingReviews = JSON.parse(localStorage.getItem('pendingReviews') || '[]');
+        if (pendingReviews.length > 0) {
+            console.log(`${pendingReviews.length} pending review(s) in localStorage:`, pendingReviews);
+        }
+    </script>
+</body>
+</html>
