@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - WeSelliPhones</title>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,pl,fr,es,de,pt,it,nl',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --blue: #0071E3; --dark: #1D1D1F; --gray: #86868B;
+            --light: #F5F5F7; --green: #34C759; --red: #FF3B30;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: #fff; color: var(--dark); line-height: 1.6;
+            -webkit-font-smoothing: antialiased; padding-bottom: 100px;
+        }
+
+        /* MOBILE NAVIGATION */
+        nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 9999;
+            padding: 8px 12px calc(env(safe-area-inset-bottom, 0px) + 8px);
+            box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+            gap: 4px;
+        }
+
+        .logo {
+            display: none;
+        }
+
+        .nav-links {
+            display: contents;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 8px 12px;
+            min-height: 48px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+            flex: 1;
+            max-width: 80px;
+        }
+
+        .nav-item:active {
+            transform: scale(0.92);
+        }
+
+        .nav-item.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 3px;
+            background: var(--blue);
+            border-radius: 0 0 3px 3px;
+        }
+
+        .nav-icon {
+            width: 22px;
+            height: 22px;
+            stroke-width: 2.5;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            background: var(--red);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        /* DESKTOP NAV */
+        @media (min-width: 768px) {
+            nav {
+                position: fixed;
+                top: 0;
+                bottom: auto;
+                padding: 0;
+                background: rgba(0, 0, 0, 0.9);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .nav-inner {
+                grid-template-columns: auto 1fr auto;
+                padding: 0 22px;
+                height: 44px;
+                max-width: 1000px;
+                margin: 0 auto;
+                gap: 0;
+                display: grid;
+            }
+
+            .logo {
+                display: block;
+                font-size: 17px;
+                font-weight: 600;
+                letter-spacing: -0.3px;
+                cursor: pointer;
+                color: #fff;
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 32px;
+                justify-content: center;
+            }
+
+            .nav-item {
+                flex-direction: row;
+                min-height: auto;
+                padding: 0;
+                font-size: 12px;
+                max-width: none;
+            }
+
+            .nav-item::before {
+                display: none;
+            }
+
+            .nav-item:hover {
+                color: #fff;
+            }
+
+            .nav-item.active {
+                background: none;
+                color: #fff;
+            }
+
+            .nav-icon {
+                display: none;
+            }
+
+            body {
+                padding-top: 44px;
+                padding-bottom: 0;
+            }
+        }
+
+        .header {
+            background: var(--dark); padding: 80px 24px 40px;
+            text-align: center; color: #fff; position: relative;
+        }
+        .header-top {
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 1200px; margin: 0 auto 30px; flex-wrap: wrap; gap: 20px;
+        }
+        #google_translate_element {
+            background: rgba(255,255,255,0.1); padding: 8px; border-radius: 12px;
+        }
+        .header h1 {
+            font-size: clamp(2rem, 6vw, 3rem); font-weight: 700;
+            letter-spacing: -0.03em; margin-bottom: 16px;
+        }
+        .header p { font-size: clamp(1rem, 3vw, 1.25rem); opacity: 0.9; }
+        .checkout-container {
+            padding: 40px 24px; max-width: 1200px; margin: 0 auto;
+        }
+        .checkout-grid { display: grid; gap: 32px; }
+        @media (min-width: 768px) {
+            .checkout-grid { grid-template-columns: 1fr 400px; }
+            .order-summary { order: 2; }
+            .payment-form { order: 1; }
+        }
+        .section {
+            background: #fff; border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 24px; padding: 32px 24px; margin-bottom: 24px;
+        }
+        .section-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+        .section-subtitle { font-size: 15px; color: var(--gray); margin-bottom: 24px; }
+        .form-row { display: grid; gap: 16px; margin-bottom: 20px; }
+        .form-row.two-col { grid-template-columns: 1fr 1fr; }
+        .form-group { margin-bottom: 20px; }
+        .form-label {
+            display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px;
+        }
+        .optional-badge { color: var(--gray); font-weight: 400; font-size: 12px; }
+        .form-input, .form-select, .form-textarea {
+            width: 100%; padding: 14px 16px; border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 12px; font-size: 16px; font-family: inherit;
+            background: #fff; transition: all 0.3s;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none; border-color: var(--blue);
+        }
+        .form-textarea { min-height: 100px; resize: vertical; }
+        .order-summary {
+            background: var(--light); border-radius: 24px; padding: 32px 24px;
+            position: sticky; top: 20px;
+        }
+        .product-item {
+            display: flex; gap: 20px; padding: 20px;
+            background: #fff; border-radius: 16px; margin-bottom: 16px;
+        }
+        .product-image {
+            width: 80px; height: 80px; background: var(--light);
+            border-radius: 12px; display: flex; align-items: center;
+            justify-content: center; flex-shrink: 0;
+        }
+        .product-image img { width: 70%; height: 70%; object-fit: contain; }
+        .product-details { flex: 1; }
+        .product-name { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+        .product-specs { font-size: 14px; color: var(--gray); margin-bottom: 12px; }
+        .product-price { font-size: 20px; font-weight: 700; }
+        .quantity-selector {
+            display: flex; align-items: center; gap: 12px; margin-top: 12px;
+        }
+        .quantity-controls {
+            display: flex; align-items: center; gap: 16px;
+            background: var(--light); padding: 8px 16px; border-radius: 12px;
+        }
+        .quantity-btn {
+            width: 32px; height: 32px; border: none; background: var(--dark);
+            color: #fff; border-radius: 8px; font-size: 18px;
+            font-weight: 600; cursor: pointer;
+        }
+        .quantity-value {
+            font-size: 18px; font-weight: 600; min-width: 30px; text-align: center;
+        }
+        .remove-item-btn {
+            background: transparent;
+            border: none;
+            color: var(--red);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 4px 8px;
+            margin-top: 8px;
+        }
+        .promo-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(52, 199, 89, 0.1); color: var(--green);
+            padding: 6px 12px; border-radius: 8px; font-size: 12px;
+            font-weight: 600; margin-right: 8px; margin-top: 8px;
+            border: 1px solid rgba(52, 199, 89, 0.2);
+        }
+        .promo-badge::before {
+            content: '✓'; font-weight: 700; font-size: 14px;
+        }
+        .shipping-options { display: grid; gap: 12px; }
+        .shipping-option {
+            padding: 16px; border: 2px solid rgba(0,0,0,0.1);
+            border-radius: 12px; cursor: pointer; transition: all 0.3s;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .shipping-option:hover { border-color: var(--blue); }
+        .shipping-option.selected {
+            border-color: var(--blue); background: rgba(0, 113, 227, 0.05);
+        }
+        .shipping-radio {
+            width: 20px; height: 20px; border: 2px solid rgba(0,0,0,0.2);
+            border-radius: 50%; position: relative; flex-shrink: 0;
+        }
+        .shipping-option.selected .shipping-radio { border-color: var(--blue); }
+        .shipping-option.selected .shipping-radio::after {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); width: 10px; height: 10px;
+            background: var(--blue); border-radius: 50%;
+        }
+        .shipping-info { flex: 1; }
+        .shipping-name { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+        .shipping-desc { font-size: 13px; color: var(--gray); }
+        .shipping-price { font-size: 18px; font-weight: 700; }
+        .checkbox-group {
+            display: flex; align-items: center; gap: 12px; padding: 16px;
+            background: var(--light); border-radius: 12px; cursor: pointer;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: 20px; height: 20px; cursor: pointer;
+        }
+        .checkbox-label { flex: 1; font-size: 15px; font-weight: 500; }
+        .checkbox-price { font-size: 16px; font-weight: 700; color: var(--blue); }
+        .price-breakdown {
+            border-top: 2px solid rgba(0,0,0,0.1); padding-top: 20px; margin-top: 20px;
+        }
+        .price-row {
+            display: flex; justify-content: space-between;
+            margin-bottom: 12px; font-size: 16px;
+        }
+        .price-row.discount { color: var(--green); font-weight: 600; }
+        .price-row.total {
+            font-size: 24px; font-weight: 700; padding-top: 12px;
+            border-top: 2px solid rgba(0,0,0,0.1); margin-top: 12px;
+        }
+        .payment-methods { display: grid; gap: 16px; }
+        .payment-method {
+            padding: 20px; border: 2px solid rgba(0,0,0,0.1);
+            border-radius: 16px; cursor: pointer; transition: all 0.3s;
+            display: flex; align-items: center; gap: 16px;
+        }
+        .payment-method:hover { border-color: var(--blue); }
+        .payment-method.selected {
+            border-color: var(--blue); background: rgba(0, 113, 227, 0.05);
+        }
+        .payment-icon {
+            width: 48px; height: 48px; background: var(--light);
+            border-radius: 12px; display: flex; align-items: center;
+            justify-content: center; flex-shrink: 0;
+        }
+        .payment-icon svg { width: 24px; height: 24px; stroke: var(--dark); fill: none; stroke-width: 2; }
+        .payment-info { flex: 1; }
+        .payment-name { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+        .payment-desc { font-size: 14px; color: var(--gray); }
+        .trust-badges {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+            padding: 24px; background: var(--light); border-radius: 16px; text-align: center;
+        }
+        .trust-badge {
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+        }
+        .trust-icon { width: 32px; height: 32px; }
+        .trust-icon svg { width: 100%; height: 100%; stroke: var(--dark); fill: none; stroke-width: 2; }
+        .trust-text { font-size: 12px; font-weight: 600; line-height: 1.3; }
+        .discount-info {
+            background: linear-gradient(135deg, rgba(52, 199, 89, 0.1) 0%, rgba(52, 199, 89, 0.05) 100%);
+            border: 1px solid rgba(52, 199, 89, 0.2);
+            border-radius: 12px; padding: 16px; margin-bottom: 16px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .discount-info svg { width: 24px; height: 24px; stroke: var(--green); fill: none; stroke-width: 2; flex-shrink: 0; }
+        .discount-info-text { flex: 1; font-size: 14px; color: var(--dark); line-height: 1.5; }
+        .discount-info-text strong { color: var(--green); }
+        .btn-primary {
+            width: 100%; padding: 18px 32px; background: var(--dark);
+            color: #fff; border: none; border-radius: 999px;
+            font-size: 17px; font-weight: 600; cursor: pointer; transition: all 0.3s;
+        }
+        .btn-primary:hover { background: #2D2D2F; transform: scale(1.02); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+        .loading { display: none; text-align: center; padding: 20px; }
+        .loading.active { display: block; }
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5); z-index: 10000; align-items: center;
+            justify-content: center; padding: 24px;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: #fff; border-radius: 24px; padding: 40px 32px;
+            max-width: 500px; width: 100%; text-align: center;
+        }
+        .success-icon {
+            width: 80px; height: 80px; background: var(--green);
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; margin: 0 auto 24px; color: #fff;
+        }
+        .success-icon svg { width: 48px; height: 48px; stroke: #fff; fill: none; stroke-width: 3; }
+        .modal-title { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+        .modal-text { font-size: 16px; color: var(--gray); margin-bottom: 24px; }
+        .reference-box {
+            background: var(--light); padding: 20px;
+            border-radius: 12px; margin-bottom: 24px;
+        }
+        .reference-label { font-size: 13px; color: var(--gray); margin-bottom: 6px; }
+        .reference-value { font-size: 24px; font-weight: 700; font-family: monospace; }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 60px 24px;
+        }
+        .empty-cart h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .empty-cart p {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 32px;
+        }
+        
+        .currency-selector {
+            display: flex; align-items: center; gap: 10px;
+            background: rgba(255,255,255,0.5); padding: 10px 16px; border-radius: 12px;
+            width: 100%; justify-content: flex-start;
+        }
+        .currency-selector label { font-size: 14px; font-weight: 500; color: #000; }
+        .currency-selector select {
+            background: #fff; color: #000;
+            border: 1px solid rgba(0,0,0,0.2); padding: 8px 12px;
+            border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <div class="logo" onclick="window.location.href='index.html'">WeSelliPhones</div>
+            
+            <div class="nav-links">
+                <a href="index.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="shop.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span>Shop</span>
+                </a>
+                <a href="sell.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 6v6l4 2"></path>
+                    </svg>
+                    <span>Sell</span>
+                </a>
+                <a href="#" class="nav-item active">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span>Cart</span>
+                    <div class="cart-badge" id="cart-badge" style="display: none;">0</div>
+                </a>
+                <a href="#" class="nav-item" onclick="openContactModal(event)">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>Contact</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="header">
+        <div class="header-top">
+            <div id="google_translate_element"></div>
+        </div>
+        <h1>Checkout</h1>
+        <p>Complete your purchase securely</p>
+    </div>
+
+    <div class="checkout-container" id="checkout-area">
+        <!-- Content will be populated by JavaScript -->
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <div class="success-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <h2 class="modal-title">Order Confirmed!</h2>
+            <p class="modal-text">Your order has been received.</p>
+            <div class="reference-box">
+                <div class="reference-label">Order Reference</div>
+                <div class="reference-value" id="order-reference">WBP-12345</div>
+            </div>
+            <button class="btn-primary" onclick="window.location.href='index.html'">Continue Shopping</button>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contact-modal">
+        <div class="modal-content">
+            <button onclick="closeContactModal()" style="position: absolute; top: 20px; right: 20px; width: 32px; height: 32px; border: none; background: var(--light); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <h2 class="modal-title">Contact & Support</h2>
+            
+            <div style="display: flex; align-items: center; gap: 16px; padding: 20px; background: var(--light); border-radius: 16px; margin-bottom: 16px;">
+                <div style="width: 48px; height: 48px; background: var(--blue); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" style="width: 24px; height: 24px;">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: var(--gray); margin-bottom: 4px;">Email</div>
+                    <div style="font-size: 16px; font-weight: 600; color: var(--dark);">
+                        <a href="mailto:support@weselliphones.net" style="color: var(--blue); text-decoration: none;">support@weselliphones.net</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 16px; padding: 20px; background: var(--light); border-radius: 16px; margin-bottom: 16px;">
+                <div style="width: 48px; height: 48px; background: var(--blue); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" style="width: 24px; height: 24px;">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: var(--gray); margin-bottom: 4px;">Phone</div>
+                    <div style="font-size: 16px; font-weight: 600; color: var(--dark);">
+                        <a href="tel:+13477533991" style="color: var(--blue); text-decoration: none;">+1 (347) 753-3991</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 16px; padding: 20px; background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); border-radius: 16px; color: #fff;">
+                <div style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" style="width: 24px; height: 24px;">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 4px;">WhatsApp</div>
+                    <div style="font-size: 16px; font-weight: 600;">
+                        <a href="https://wa.me/13477533991" target="_blank" style="color: #fff; text-decoration: none;">Chat with us instantly</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedCurrency = 'USD', selectedShipping = 'standard', selectedPayment = null;
+        let orderRef = 'WBP-' + Math.random().toString(36).substr(2, 5).toUpperCase();
+        const exchangeRates = {
+            'USD': { rate: 1.00, symbol: '$' }, 'EUR': { rate: 0.92, symbol: '€' },
+            'GBP': { rate: 0.79, symbol: '£' }, 'CAD': { rate: 1.36, symbol: 'C$' },
+            'AUD': { rate: 1.52, symbol: 'A$' }, 'PLN': { rate: 4.00, symbol: 'zł' }
+        };
+        const shippingCosts = { 'standard': 0, 'express': 45 };
+
+        // Cart Functions
+        function getCart() {
+            return JSON.parse(localStorage.getItem('cart')) || [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartBadge();
+        }
+
+        function updateCartBadge() {
+            const cart = getCart();
+            const badge = document.getElementById('cart-badge');
+            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            
+            if (totalItems > 0) {
+                badge.textContent = totalItems;
+                badge.style.display = 'block';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        function removeFromCart(index) {
+            const cart = getCart();
+            cart.splice(index, 1);
+            saveCart(cart);
+            loadCheckoutPage();
+        }
+
+        function updateQuantity(index, change) {
+            const cart = getCart();
+            if (cart[index]) {
+                cart[index].quantity = (cart[index].quantity || 1) + change;
+                if (cart[index].quantity < 1) cart[index].quantity = 1;
+                if (cart[index].quantity > 10) cart[index].quantity = 10;
+                saveCart(cart);
+                loadCheckoutPage();
+            }
+        }
+
+        function convertPrice(usdAmount) {
+            return (usdAmount * exchangeRates[selectedCurrency].rate).toFixed(2);
+        }
+
+        function getCurrencySymbol() { 
+            return exchangeRates[selectedCurrency].symbol; 
+        }
+
+        function changeCurrency() {
+            selectedCurrency = document.getElementById('currency-select').value;
+            updatePrices();
+        }
+
+        function selectShipping(type) {
+            selectedShipping = type;
+            document.querySelectorAll('.shipping-option').forEach(el => el.classList.remove('selected'));
+            event.target.closest('.shipping-option').classList.add('selected');
+            updatePrices();
+        }
+
+        function selectPayment(method) {
+            selectedPayment = method;
+            document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('selected'));
+            event.target.closest('.payment-method').classList.add('selected');
+            updatePrices();
+            updateCheckoutButton();
+        }
+
+        function updatePrices() {
+            const cart = getCart();
+            const symbol = getCurrencySymbol();
+            
+            document.querySelectorAll('[id$="-currency"]').forEach(el => el.textContent = symbol);
+            
+            let subtotal = 0;
+            let totalQuantity = 0;
+
+            cart.forEach(item => {
+                const qty = item.quantity || 1;
+                const price = item.salePrice || item.price || item.retailPrice;
+                subtotal += price * qty;
+                totalQuantity += qty;
+            });
+
+            document.getElementById('item-count').textContent = totalQuantity;
+            document.getElementById('subtotal').textContent = convertPrice(subtotal);
+            
+            // Calculate discount
+            let discount = 0, discountPercent = 0;
+            
+            document.getElementById('discount-info-1').style.display = 'none';
+            document.getElementById('discount-info-2').style.display = 'none';
+            document.getElementById('discount-info-crypto').style.display = 'none';
+            
+            if (totalQuantity >= 3) {
+                discountPercent = 25;
+            } else if (totalQuantity >= 2) {
+                discountPercent = 15;
+                document.getElementById('discount-info-2').style.display = 'flex';
+            } else if (totalQuantity === 1) {
+                document.getElementById('discount-info-1').style.display = 'flex';
+            }
+            
+            if (selectedPayment === 'crypto') {
+                discountPercent = Math.max(discountPercent, 15);
+            } else if (selectedPayment !== 'crypto' && totalQuantity < 3) {
+                document.getElementById('discount-info-crypto').style.display = 'flex';
+            }
+            
+            if (discountPercent > 0) {
+                discount = (subtotal * discountPercent) / 100;
+                document.getElementById('discount-row').style.display = 'flex';
+                document.getElementById('discount-percent').textContent = discountPercent;
+                document.getElementById('discount-amount').textContent = convertPrice(discount);
+            } else {
+                document.getElementById('discount-row').style.display = 'none';
+            }
+            
+            const shippingCost = shippingCosts[selectedShipping];
+            if (shippingCost > 0) {
+                document.getElementById('shipping-cost').innerHTML = `<span>${symbol}</span>${convertPrice(shippingCost)}`;
+            } else {
+                document.getElementById('shipping-cost').textContent = 'FREE';
+            }
+            document.getElementById('express-price').textContent = symbol + convertPrice(45);
+            
+            const insurance = document.getElementById('insurance').checked ? 35 : 0;
+            if (insurance > 0) {
+                document.getElementById('insurance-row').style.display = 'flex';
+                document.getElementById('insurance-cost').textContent = convertPrice(insurance);
+            } else {
+                document.getElementById('insurance-row').style.display = 'none';
+            }
+            document.getElementById('insurance-price').textContent = symbol + convertPrice(35);
+            
+            const total = subtotal - discount + shippingCost + insurance;
+            document.getElementById('total').textContent = convertPrice(total);
+        }
+
+        function validateForm() {
+            const required = ['firstName', 'lastName', 'email', 'phone', 'address1', 'city', 'state', 'postalCode', 'country'];
+            return required.every(id => {
+                const el = document.getElementById(id);
+                return el && el.value.trim() !== '';
+            });
+        }
+
+        function updateCheckoutButton() {
+            const btn = document.getElementById('checkout-btn');
+            if (btn) {
+                btn.disabled = !validateForm() || !selectedPayment;
+            }
+        }
+
+        function loadCheckoutPage() {
+            const cart = getCart();
+            const checkoutArea = document.getElementById('checkout-area');
+
+            if (cart.length === 0) {
+                checkoutArea.innerHTML = `
+                    <div class="empty-cart">
+                        <h2>Your cart is empty</h2>
+                        <p>Add some items to your cart to continue shopping</p>
+                        <button class="btn-primary" onclick="window.location.href='shop.html'" style="max-width: 300px; margin: 0 auto;">
+                            Browse Products
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            // Calculate totals for first product (for backward compatibility with single-product API)
+            const firstProduct = cart[0];
+            const firstProductQty = firstProduct.quantity || 1;
+            const firstProductPrice = firstProduct.salePrice || firstProduct.price || firstProduct.retailPrice;
+
+            checkoutArea.innerHTML = `
+                <div class="checkout-grid">
+                    <div class="payment-form">
+                        <div class="section">
+                            <h2 class="section-title">Shipping Information</h2>
+                            <p class="section-subtitle">Where should we send your order?</p>
+                            <div class="form-row two-col">
+                                <div class="form-group">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-input" id="firstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-input" id="lastName" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-input" id="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" class="form-input" id="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Alternative Contact <span class="optional-badge">(Optional)</span></label>
+                                <input type="text" class="form-input" id="altContact" placeholder="Telegram or WhatsApp">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Street Address</label>
+                                <input type="text" class="form-input" id="address1" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Apartment, Suite <span class="optional-badge">(Optional)</span></label>
+                                <input type="text" class="form-input" id="address2">
+                            </div>
+                            <div class="form-row two-col">
+                                <div class="form-group">
+                                    <label class="form-label">City</label>
+                                    <input type="text" class="form-input" id="city" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">State/Province</label>
+                                    <input type="text" class="form-input" id="state" required>
+                                </div>
+                            </div>
+                            <div class="form-row two-col">
+                                <div class="form-group">
+                                    <label class="form-label">Postal Code</label>
+                                    <input type="text" class="form-input" id="postalCode" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Country</label>
+                                    <select class="form-select" id="country" required>
+                                        <option value="US">United States</option>
+                                        <option value="CA">Canada</option>
+                                        <option value="GB">United Kingdom</option>
+                                        <option value="AU">Australia</option>
+                                        <option value="PL">Poland</option>
+                                        <option value="FR">France</option>
+                                        <option value="ES">Spain</option>
+                                        <option value="DE">Germany</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <h2 class="section-title">Business Info <span class="optional-badge">(Optional)</span></h2>
+                            <div class="form-group">
+                                <label class="form-label">Company Name</label>
+                                <input type="text" class="form-input" id="companyName">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">VAT Number</label>
+                                <input type="text" class="form-input" id="vatNumber">
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <h2 class="section-title">Delivery</h2>
+                            <div class="shipping-options">
+                                <div class="shipping-option selected" onclick="selectShipping('standard')">
+                                    <div class="shipping-radio"></div>
+                                    <div class="shipping-info">
+                                        <div class="shipping-name">Standard</div>
+                                        <div class="shipping-desc">7-14 days</div>
+                                    </div>
+                                    <div class="shipping-price">FREE</div>
+                                </div>
+                                <div class="shipping-option" onclick="selectShipping('express')">
+                                    <div class="shipping-radio"></div>
+                                    <div class="shipping-info">
+                                        <div class="shipping-name">Express</div>
+                                        <div class="shipping-desc">2-5 days</div>
+                                    </div>
+                                    <div class="shipping-price" id="express-price">$45</div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label class="form-label">Delivery Date</label>
+                                <select class="form-select" id="deliveryDate">
+                                    <option value="asap">As soon as possible</option>
+                                    <option value="custom">Choose date</option>
+                                </select>
+                            </div>
+                            <div class="checkbox-group" style="margin-top: 16px;">
+                                <input type="checkbox" id="insurance" onchange="updatePrices()">
+                                <label class="checkbox-label" for="insurance">Order Insurance</label>
+                                <span class="checkbox-price" id="insurance-price">$35</span>
+                            </div>
+                            <div class="form-group" style="margin-top: 20px;">
+                                <label class="form-label">Notes <span class="optional-badge">(Optional)</span></label>
+                                <textarea class="form-textarea" id="orderNotes"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Promo Code <span class="optional-badge">(Optional)</span></label>
+                                <input type="text" class="form-input" id="promoCode">
+                            </div>
+                        </div>
+
+                        <div class="trust-badges">
+                            <div class="trust-badge">
+                                <div class="trust-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                </div>
+                                <div class="trust-text">SSL Secure</div>
+                            </div>
+                            <div class="trust-badge">
+                                <div class="trust-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                                <div class="trust-text">Money-Back</div>
+                            </div>
+                            <div class="trust-badge">
+                                <div class="trust-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                                </div>
+                                <div class="trust-text">Free Returns</div>
+                            </div>
+                            <div class="trust-badge">
+                                <div class="trust-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                </div>
+                                <div class="trust-text">4.8/5 Rating</div>
+                            </div>
+                            <div class="trust-badge">
+                                <div class="trust-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                </div>
+                                <div class="trust-text">Protected</div>
+                            </div>
+                            <div class="trust-badge">
+                                <div class="trust-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                </div>
+                                <div class="trust-text">Certified</div>
+                            </div>
+                        </div>
+
+                        <div class="section">
+                            <h2 class="section-title">Payment</h2>
+                            
+                            <div class="discount-info" id="discount-info-1" style="display: none;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                <div class="discount-info-text">
+                                    <strong>Buy 2+ items and save 15%!</strong> Add one more to your cart.
+                                </div>
+                            </div>
+
+                            <div class="discount-info" id="discount-info-2" style="display: none;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                <div class="discount-info-text">
+                                    <strong>Buy 3+ items and save 25%!</strong> Add one more to unlock bigger savings.
+                                </div>
+                            </div>
+
+                            <div class="discount-info" id="discount-info-crypto" style="display: none;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                <div class="discount-info-text">
+                                    <strong>Save 15% by paying with cryptocurrency!</strong> Select crypto payment method below.
+                                </div>
+                            </div>
+                            
+                            <div class="payment-methods">
+                                <div class="payment-method" onclick="selectPayment('stripe')">
+                                    <div class="payment-icon">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                                    </div>
+                                    <div class="payment-info">
+                                        <div class="payment-name">Card / Apple Pay / Google Pay</div>
+                                        <div class="payment-desc">Fast & secure</div>
+                                    </div>
+                                </div>
+                                <div class="payment-method" onclick="selectPayment('ach')">
+                                    <div class="payment-icon">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                    </div>
+                                    <div class="payment-info">
+                                        <div class="payment-name">ACH Direct Debit</div>
+                                        <div class="payment-desc">US bank account</div>
+                                    </div>
+                                </div>
+                                <div class="payment-method" onclick="selectPayment('crypto')">
+                                    <div class="payment-icon">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                    </div>
+                                    <div class="payment-info">
+                                        <div class="payment-name">Cryptocurrency</div>
+                                        <div class="payment-desc">BTC, ETH, USDT +300</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn-primary" id="checkout-btn" onclick="handleCheckout()" disabled>
+                                Complete Order
+                            </button>
+                            <div class="loading" id="loading"><p>Processing...</p></div>
+                        </div>
+                    </div>
+
+                    <div class="order-summary">
+                        <h2 class="section-title">Order Summary</h2>
+                        <div id="cart-items">
+                            ${cart.map((item, index) => {
+                                const price = item.salePrice || item.price || item.retailPrice;
+                                const qty = item.quantity || 1;
+                                return `
+                                    <div class="product-item">
+                                        <div class="product-image">
+                                            <img src="${item.image}" alt="${item.name}">
+                                        </div>
+                                        <div class="product-details">
+                                            <div class="product-name">${item.name}</div>
+                                            <div class="product-specs">${item.specs}</div>
+                                            <div class="product-price"><span id="currency-symbol-${index}">$</span>${price}</div>
+                                            <div class="quantity-selector">
+                                                <span style="font-size: 14px; font-weight: 500;">Qty:</span>
+                                                <div class="quantity-controls">
+                                                    <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                                                    <span class="quantity-value" id="quantity-${index}">${qty}</span>
+                                                    <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                                                </div>
+                                            </div>
+                                            <button class="remove-item-btn" onclick="removeFromCart(${index})">Remove</button>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                        <div class="currency-selector">
+                            <label>Currency:</label>
+                            <select id="currency-select" onchange="changeCurrency()">
+                                <option value="USD">🇺🇸 USD</option>
+                                <option value="EUR">🇪🇺 EUR</option>
+                                <option value="GBP">🇬🇧 GBP</option>
+                                <option value="CAD">🇨🇦 CAD</option>
+                                <option value="AUD">🇦🇺 AUD</option>
+                                <option value="PLN">🇵🇱 PLN</option>
+                            </select>
+                        </div>
+                        <div class="price-breakdown">
+                            <div class="price-row">
+                                <span>Subtotal (<span id="item-count">1</span>)</span>
+                                <span><span id="subtotal-currency">$</span><span id="subtotal">540</span></span>
+                            </div>
+                            <div class="price-row discount" id="discount-row" style="display: none;">
+                                <span>Discount (<span id="discount-percent">15</span>%)</span>
+                                <span>-<span id="discount-currency">$</span><span id="discount-amount">81</span></span>
+                            </div>
+                            <div class="price-row">
+                                <span>Shipping</span>
+                                <span id="shipping-cost">FREE</span>
+                            </div>
+                            <div class="price-row" id="insurance-row" style="display: none;">
+                                <span>Insurance</span>
+                                <span><span id="insurance-cost-currency">$</span><span id="insurance-cost">35</span></span>
+                            </div>
+                            <div class="price-row total">
+                                <span>Total</span>
+                                <span><span id="total-currency">$</span><span id="total">540</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Attach event listeners
+            ['firstName', 'lastName', 'email', 'phone', 'address1', 'city', 'state', 'postalCode', 'country'].forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('input', updateCheckoutButton);
+                }
+            });
+
+            updatePrices();
+        }
+
+        async function handleCheckout() {
+            if (!validateForm() || !selectedPayment) {
+                alert('Please fill in all required fields and select a payment method.');
+                return;
+            }
+            
+            const btn = document.getElementById('checkout-btn');
+            const loading = document.getElementById('loading');
+            btn.disabled = true;
+            loading.classList.add('active');
+
+            const cart = getCart();
+            
+            // Calculate totals
+            let subtotal = 0;
+            let totalQuantity = 0;
+            cart.forEach(item => {
+                const qty = item.quantity || 1;
+                const price = item.salePrice || item.price || item.retailPrice;
+                subtotal += price * qty;
+                totalQuantity += qty;
+            });
+
+            // Calculate discount
+            let discountPercent = 0;
+            if (totalQuantity >= 3) discountPercent = 25;
+            else if (totalQuantity >= 2) discountPercent = 15;
+            if (selectedPayment === 'crypto') discountPercent = Math.max(discountPercent, 15);
+            const discount = (subtotal * discountPercent) / 100;
+
+            // For backward compatibility: send first product in old format
+            const firstProduct = cart[0];
+            const firstProductQty = firstProduct.quantity || 1;
+            const firstProductPrice = firstProduct.salePrice || firstProduct.price || firstProduct.retailPrice;
+            
+            const formData = {
+                orderRef: orderRef,
+                customer: {
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    altContact: document.getElementById('altContact').value
+                },
+                shipping: {
+                    address1: document.getElementById('address1').value,
+                    address2: document.getElementById('address2').value,
+                    city: document.getElementById('city').value,
+                    state: document.getElementById('state').value,
+                    postalCode: document.getElementById('postalCode').value,
+                    country: document.getElementById('country').value,
+                    method: selectedShipping
+                },
+                business: {
+                    companyName: document.getElementById('companyName').value,
+                    vatNumber: document.getElementById('vatNumber').value
+                },
+                // OLD FORMAT: For backward compatibility (single product)
+                product: {
+                    name: firstProduct.name,
+                    specs: firstProduct.specs,
+                    quantity: firstProductQty,
+                    basePrice: firstProductPrice,
+                    imageUrl: firstProduct.image
+                },
+                // NEW FORMAT: Array of all products
+                products: cart.map(item => ({
+                    name: item.name,
+                    specs: item.specs,
+                    quantity: item.quantity || 1,
+                    basePrice: item.salePrice || item.price || item.retailPrice,
+                    imageUrl: item.image,
+                    discount: item.discount || 0
+                })),
+                pricing: {
+                    currency: selectedCurrency,
+                    subtotal: parseFloat(document.getElementById('subtotal').textContent),
+                    shipping: shippingCosts[selectedShipping],
+                    insurance: document.getElementById('insurance').checked ? 35 : 0,
+                    discount: parseFloat(document.getElementById('discount-amount')?.textContent || 0),
+                    total: parseFloat(document.getElementById('total').textContent)
+                },
+                notes: document.getElementById('orderNotes').value,
+                promoCode: document.getElementById('promoCode').value
+            };
+            
+            try {
+                if (selectedPayment === 'stripe') {
+                    await handleStripeCheckout(formData);
+                } else if (selectedPayment === 'ach') {
+                    await handleACHCheckout(formData);
+                } else if (selectedPayment === 'crypto') {
+                    await handleCryptoCheckout(formData);
+                }
+            } catch (error) {
+                alert('Payment error: ' + error.message);
+                btn.disabled = false;
+                loading.classList.remove('active');
+            }
+        }
+
+        async function handleStripeCheckout(formData) {
+            try {
+                const response = await fetch('/api/create-stripe-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ formData, paymentType: 'card' })
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Failed to create checkout session');
+                }
+                
+                const { url } = await response.json();
+                window.location.href = url;
+            } catch (error) {
+                console.error('Stripe checkout error:', error);
+                throw new Error('Failed to create Stripe checkout: ' + error.message);
+            }
+        }
+
+        async function handleACHCheckout(formData) {
+            if (formData.pricing.currency !== 'USD') {
+                throw new Error('ACH payments only support USD currency. Please change your currency to USD or select a different payment method.');
+            }
+            
+            try {
+                const response = await fetch('/api/create-stripe-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ formData, paymentType: 'ach' })
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Failed to create ACH checkout');
+                }
+                
+                const { url } = await response.json();
+                window.location.href = url;
+            } catch (error) {
+                console.error('ACH checkout error:', error);
+                throw new Error('Failed to create ACH checkout: ' + error.message);
+            }
+        }
+
+        async function handleCryptoCheckout(formData) {
+            try {
+                const response = await fetch('/api/create-crypto-invoice', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ formData })
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Failed to create crypto invoice');
+                }
+                
+                const { invoice_url } = await response.json();
+                window.location.href = invoice_url;
+            } catch (error) {
+                console.error('Crypto checkout error:', error);
+                throw new Error('Failed to create crypto invoice: ' + error.message);
+            }
+        }
+
+        function openContactModal(event) {
+            if (event) event.preventDefault();
+            document.getElementById('contact-modal').classList.add('active');
+        }
+
+        function closeContactModal() {
+            document.getElementById('contact-modal').classList.remove('active');
+        }
+
+        document.getElementById('contact-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeContactModal();
+            }
+        });
+
+        // Initialize
+        window.addEventListener('load', function() {
+            document.getElementById('order-reference').textContent = orderRef;
+            loadCheckoutPage();
+            updateCartBadge();
+        });
+    </script>
+</body>
+</html>
