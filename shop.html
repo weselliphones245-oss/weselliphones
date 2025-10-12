@@ -707,7 +707,7 @@
     <div class="shop-container">
         <div class="shop-header">
             <h1>Shop All Devices</h1>
-            <p>Premium certified pre-owned devices with dynamic pricing</p>
+            <p>Premium certified pre-owned devices with fixed pricing</p>
         </div>
 
         <div class="filter-tabs">
@@ -754,7 +754,7 @@
                 <h4>Support</h4>
                 <a href="#" onclick="openContactModal(event)">Contact Us</a>
                 <a href="tel:+13477533991">Phone</a>
-                <a href="https://wa.me/3477533991" target="_blank">WhatsApp</a>
+                <a href="https://wa.me/13477533991" target="_blank">WhatsApp</a>
             </div>
         </div>
         <div class="footer-bottom">© 2025 WeSelliPhones. All rights reserved.</div>
@@ -830,66 +830,68 @@
     </div>
 
     <script>
-        // All products with fluctuating discounts
-        const baseProducts = [
-            { name: 'iPhone 16 Pro Max', specs: '256GB • Black Titanium • Unlocked', condition: 'Excellent', retail: 1199, image: 'https://m.media-amazon.com/images/I/61Ony8rgwEL._AC_SX342_SY445_QL70_ML2_.jpg', stock: 12, category: 'iphone' },
-            { name: 'iPhone 16 Pro Max', specs: '256GB • white Titanium • Unlocked', condition: 'Excellent', retail: 1199, image: 'https://m.media-amazon.com/images/I/51YA+uDrjwL._UF894,1000_QL80_.jpg', stock: 8, category: 'iphone' },
-            { name: 'iPhone 16 Pro Max', specs: '128GB • ultramarine • Unlocked', condition: 'Excellent', retail: 1099, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREgLWs66jEBt8gRkAWBFaoh6uH1H2r9dvRkA&s', stock: 15, category: 'iphone' },
-            { name: 'iPhone 16 Pro Max', specs: '256GB • teal• Unlocked', condition: 'Excellent', retail: 1199, image: 'https://cdn.mos.cms.futurecdn.net/bBSPJis6jQJSda5Qrqs7ha.jpg', stock: 12, category: 'iphone' },
-            { name: 'iPhone 16 Pro', specs: '256GB • black Titanium • Unlocked', condition: 'Excellent', retail: 9999, image: 'https://m.media-amazon.com/images/I/71QkWOSDkmL._UF350,350_QL80_.jpg', stock: 22, category: 'iphone' },
-            { name: 'iPhone 16 Pro', specs: '128GB • white titanium • Unlocked', condition: 'Excellent', retail: 999, image: 'https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-finish-select-202409-6-1inch-white_FMT_WHH?wid=1280&hei=492&fmt=jpeg&qlt=90&.v=1724117001068', stock: 12, category: 'iphone' },
-            { name: 'iPhone 16 Pro', specs: '256GB • teal• Unlocked', condition: 'Excellent', retail: 999, image: 'https://m.media-amazon.com/images/I/71dAfxOFDuL._UF894,1000_QL80_.jpg', stock: 4, category: 'iphone' },
-            { name: 'iPhone 15 Pro Max', specs: '256GB • White Titanium • Unlocked', condition: 'Excellent', retail: 999, image: 'https://i.ytimg.com/vi/9aKE7z_rZ5I/maxresdefault.jpg', stock: 18, category: 'iphone' },
-            { name: 'iPhone 15 Pro', specs: '256GB • Blue Titanium • Unlocked', condition: 'Like New', retail: 999, image: 'https://platcart.com/wp-content/uploads/2024/02/15problue.webp', stock: 14, category: 'iphone' },
-            { name: 'iPhone 14 Pro Max', specs: '256GB • Space Black • Unlocked', condition: 'Excellent', retail: 999, image: 'https://supercells.co.za/wp-content/uploads/2023/05/14-pro-max-128gb.jpg', stock: 12, category: 'iphone' },
-            { name: 'iPhone 14 Pro', specs: '256GB • Space Black • Unlocked', condition: 'Like New', retail: 799, image: 'https://istorepreowned.co.za/media/catalog/product/cache/7cbfd4bf9761b066f119e95af17e67c5/i/p/iphone_14_pro_space_black_pdp_image_position-4__eaen_5_1_1_1_1_1_1.jpg', stock: 15, category: 'iphone' },
-            { name: 'iPhone 14 Pro', specs: '128GB • Deep Purple • Unlocked', condition: 'Good', retail: 750, image: 'https://m-cdn.phonearena.com/images/article/145949-wide-two_1200/Recent-survey-shows-people-are-loving-the-Deep-Purple-iPhone-14-Pro.jpg', stock: 20, category: 'iphone' },
-            { name: 'iPhone 13', specs: '128GB • Midnight • Unlocked', condition: 'Good', retail: 699, image: 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRndDBTKVv7XNK0k0wDN4L0-8h8F_MjgXYFDd_5MBB9hHFaxveQC84ChFTOhDAA6LjGhv6Mmw-A9a51CXWWiUsPn2Uq1QxcyUgLbVznsQRF9KgMMmr7EBONpi0HDNBV244NnAQHt-A&usqp=CAc', stock: 25, category: 'iphone' },
-            { name: 'iPhone 12 Pro Max', specs: '128GB • Gold • Unlocked', condition: 'Good', retail: 599, image: 'https://cdn.shopify.com/s/files/1/0733/5867/2170/files/905ac66f-3559-4008-827d-13f2f0925239.jpg?v=1744831843', stock: 29, category: 'iphone' },
-            { name: 'iPhone 12', specs: '128GB • Blue • Unlocked', condition: 'Good', retail: 499, image: 'https://www.apple.com/newsroom/images/product/iphone/geo/apple_iphone-12_2-up_geo_10132020_inline.jpg.large.jpg', stock: 14, category: 'iphone' },
-            { name: 'Samsung Galaxy S25 Ultra', specs: '256GB • Titanium Gray • Unlocked', condition: 'Like New', retail: 1300, image: 'https://images.moneycontrol.com/static-mcnews/2024/10/20241021090447_S24-Ultra.jpg?impolicy=website&width=1280&height=720', stock: 18, category: 'galaxy' },
-            { name: 'Samsung Galaxy S25 Ultra', specs: '512GB • Titanium Black • Unlocked', condition: 'Excellent', retail: 1420, image: 'https://cdn.neowin.com/news/images/uploaded/2024/11/1731044582_galaxy-s25-ultra.jpg', stock: 12, category: 'galaxy' },
-            { name: 'Samsung Galaxy S24 Ultra', specs: '512GB • Titanium Black • Unlocked', condition: 'Excellent', retail: 1300, image: 'https://uk.static.webuy.com/product_images/Phones/Phones%20Android/SSAMS928B512GTGUNLB_l.jpg', stock: 14, category: 'galaxy' },
-            { name: 'Samsung Galaxy S24 Ultra', specs: '256GB • Titanium Violet • Unlocked', condition: 'Like New', retail: 1200, image: 'https://images.samsung.com/my/smartphones/galaxy-s24-ultra/images/galaxy-s24-ultra-highlights-color-titanium-violet-back-mo.jpg?imbypass=true', stock: 16, category: 'galaxy' },
-            { name: 'Galaxy Tab S9 Ultra', specs: '256GB • Graphite • S Pen', condition: 'Excellent', retail: 1200, image: 'https://images.samsung.com/is/image/samsung/p6pim/za/sm-x916bzaaafa/gallery/za-galaxy-tab-s-sm-x916bzaaafa-front-graphite-538073064?$684_547_PNG$', stock: 9, category: 'galaxy' },
-            { name: 'Galaxy Tab S9', specs: '128GB • Beige • S Pen', condition: 'Like New', retail: 800, image: 'https://snapcraze.co.za/wp-content/uploads/2024/08/tab-s9-ultra-2.jpg', stock: 15, category: 'galaxy' },
-            { name: 'MacBook Pro 16"', specs: 'M3 Pro • 512GB • Space Black', condition: 'Like New', retail: 2499, image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&auto=format&fit=crop&q=80', stock: 8, category: 'macbook' },
-            { name: 'MacBook Pro 16"', specs: 'M3 Max • 1TB • Space Black', condition: 'Excellent', retail: 3499, image: 'https://images.macrumors.com/t/ty6Ia6BV-3k2q-jUoGg6KVKMvMI=/1200x1200/smart/article-new/2024/10/M4-MacBook-Pro-Thumb-2.jpg', stock: 5, category: 'macbook' },
-            { name: 'MacBook Pro 14"', specs: 'M3 • 512GB • Space Gray', condition: 'Excellent', retail: 1999, image: 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&auto=format&fit=crop&q=80', stock: 12, category: 'macbook' },
-            { name: 'MacBook Pro 14"', specs: 'M3 Pro • 1TB • Silver', condition: 'Like New', retail: 2399, image: 'https://istorepreowned.co.za/media/catalog/product/cache/7cbfd4bf9761b066f119e95af17e67c5/m/a/macbook_pro_m2_chip_hero_horizontal_screen__usen_6_1.jpg', stock: 7, category: 'macbook' },
-            { name: 'MacBook Air M2', specs: '256GB • Midnight', condition: 'Excellent', retail: 1199, image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=400&auto=format&fit=crop&q=80', stock: 10, category: 'macbook' },
-            { name: 'MacBook Air M2', specs: '512GB • Starlight', condition: 'Like New', retail: 1399, image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=400&auto=format&fit=crop&q=80', stock: 8, category: 'macbook' },
-            { name: 'iPad Pro 13"', specs: 'M4 • 256GB • Space Black', condition: 'Excellent', retail: 1299, image: 'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT-mt_YMihDddYbcuMui0dZIyCTlmUDpa1sl_MAIqxm0qGrm11jDYo7HF_UalxrLT72hXSuF_0Ot1a-03Gtjgvcc7qy3joctb40tgcnznrC8qVYuHvLlw3HnSeFjVt0Q9OIKde3kA&usqp=CAc', stock: 7, category: 'ipad' },
-            { name: 'iPad Pro 13"', specs: 'M4 • 512GB • Silver', condition: 'Like New', retail: 1499, image: 'https://www.digicape.co.za/image/cache/catalog/_products/2024/ipad/13%20Pro/iPad_Pro_13_M4_Cell_Space_Black_0-1000x1000.jpg', stock: 5, category: 'ipad' },
-            { name: 'iPad Pro 11"', specs: 'M4 • 256GB • Space Black', condition: 'Excellent', retail: 999, image: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTsVlLyhIB2zPltd5ER83CTpZXqiFDZYfYvIl_BFNrl_wZh40BNXtRAkd_heNlEozAjXmR_EwH8vVZLhTS9nbe-7hKQHf31-hCj7oUL74tf8ir9nGJ4rhTQfnI-HBj6ddyJCjv7AA&usqp=CAc', stock: 10, category: 'ipad' },
-            { name: 'iPad Air M2', specs: '128GB • Starlight', condition: 'Like New', retail: 599, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh8gU2EZqLof7A3RHfbOJpSMCD_x9t6bdlGw&s', stock: 16, category: 'ipad' },
-            { name: 'iPad Air M2', specs: '256GB • Blue', condition: 'Excellent', retail: 749, image: 'https://images.indianexpress.com/2024/05/apple-ipad-air-m2.jpg', stock: 12, category: 'ipad' },
-            { name: 'Samsung 85" Neo QLED 8K', specs: 'QN900F • 8K • Smart TV', condition: 'Like New', retail: 8000, image: 'https://images.samsung.com/is/image/samsung/p6pim/za/qa85qn900dkxxa/gallery/za-qled-qn900d-qa85qn900dkxxa-541556427?$684_547_PNG$', stock: 3, category: 'tv' },
-            { name: 'Samsung 75" Neo QLED 4K', specs: 'QN90F • 4K • Mini LED', condition: 'Excellent', retail: 3000, image: 'https://images.samsung.com/is/image/samsung/p6pim/za/qa85qn900dkxxa/gallery/za-qled-qn900d-qa85qn900dkxxa-541556427?$684_547_PNG$', stock: 6, category: 'tv' },
-            { name: 'Samsung 100" Neo QLED 4K', specs: 'QN90F • 4K • Quantum HDR', condition: 'Like New', retail: 10000, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQD0CGC5C1TtGj3tAewyAIRJLntx_25VUbWQA&s', stock: 8, category: 'tv' },
-            { name: 'Samsung 98" Crystal UHD', specs: 'DU9000 • 4K • Crystal', condition: 'Like New', retail: 1599, image: 'https://image-us.samsung.com/SamsungUS/home/television-home-theater/tvs/crystal-uhd-tvs/10142024/UN98DU9000FXZA-S.COM_Version_1_V01.jpg?$product-details-jpg$', stock: 8, category: 'tv' },
-            { name: 'Samsung 115" QN90F', specs: '115" • 4K • Neo QLED', condition: 'Like New', retail: 27000, image: 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQQfcNxH3ajFzSfD-DWZCSlQHcmX8VKTenAWPhe0ycJUvQhJR9hJTS24L3NpMnc9SEHLy6SEi4ZGr8kFMJActZ_Ei1nAaGQ-YECGwej-Tp6Ed0AnenI7GEo', stock: 1, category: 'tv' },
-            { name: 'iMac 24" M3', specs: '256GB • Silver', condition: 'Excellent', retail: 1499, image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&auto=format&fit=crop&q=80', stock: 5, category: 'imac' },
-            { name: 'iMac 24" M3', specs: '512GB • Blue', condition: 'Like New', retail: 1699, image: 'https://fdn.gsmarena.com/imgroot/news/23/10/apple-24-inch-m3-imac-official/inline/-1200/gsmarena_008.jpg', stock: 4, category: 'imac' }
-        ];
-
-        // Generate random discount (35-50%)
-        function getRandomDiscount() {
-            return Math.floor(Math.random() * (50 - 35 + 1)) + 35;
-        }
-
-        // Calculate sale price
-        function calculateSalePrice(retailPrice, discount) {
-            return Math.round(retailPrice * (1 - discount / 100));
-        }
-
-        // Generate products with discounts
-        const products = baseProducts.map(product => ({
+        // Products with FIXED prices - ensures logical pricing hierarchy
+        const products = [
+            // iPhone 16 Series (Newest - Most Expensive)
+            { name: 'iPhone 16 Pro Max', specs: '256GB • Black Titanium • Unlocked', condition: 'Excellent', retail: 1199, price: 780, image: 'https://m.media-amazon.com/images/I/61Ony8rgwEL._AC_SX342_SY445_QL70_ML2_.jpg', stock: 12, category: 'iphone' },
+            { name: 'iPhone 16 Pro Max', specs: '256GB • White Titanium • Unlocked', condition: 'Excellent', retail: 1199, price: 770, image: 'https://m.media-amazon.com/images/I/51YA+uDrjwL._UF894,1000_QL80_.jpg', stock: 8, category: 'iphone' },
+            { name: 'iPhone 16 Pro Max', specs: '128GB • Ultramarine • Unlocked', condition: 'Excellent', retail: 1099, price: 715, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREgLWs66jEBt8gRkAWBFaoh6uH1H2r9dvRkA&s', stock: 15, category: 'iphone' },
+            { name: 'iPhone 16 Pro Max', specs: '256GB • Teal • Unlocked', condition: 'Excellent', retail: 1199, price: 780, image: 'https://cdn.mos.cms.futurecdn.net/bBSPJis6jQJSda5Qrqs7ha.jpg', stock: 12, category: 'iphone' },
+            //{ name: 'iPhone 16 Pro', specs: '256GB • Black Titanium • Unlocked', condition: 'Excellent', retail: 999, price: 650, image: 'https://m.media-amazon.com/images/I/71QkWOSDkmL._UF350,350_QL80_.jpg', stock: 22, category: 'iphone' },
+            { name: 'iPhone 16 Pro', specs: '128GB • White Titanium • Unlocked', condition: 'Excellent', retail: 899, price: 640, image: 'https://m.media-amazon.com/images/I/51YA+uDrjwL._UF894,1000_QL80_.jpg', stock: 12, category: 'iphone' },
+            { name: 'iPhone 16 Pro', specs: '256GB • Teal • Unlocked', condition: 'Excellent', retail: 899, price: 630, image: 'https://m.media-amazon.com/images/I/71dAfxOFDuL._UF894,1000_QL80_.jpg', stock: 4, category: 'iphone' },
+            
+            // iPhone 15 Series
+            { name: 'iPhone 15 Pro Max', specs: '256GB • White Titanium • Unlocked', condition: 'Excellent', retail: 899, price: 620, image: 'https://i.ytimg.com/vi/9aKE7z_rZ5I/maxresdefault.jpg', stock: 18, category: 'iphone' },
+            { name: 'iPhone 15 Pro', specs: '256GB • Blue Titanium • Unlocked', condition: 'Like New', retail: 759, price: 600, image: 'https://platcart.com/wp-content/uploads/2024/02/15problue.webp', stock: 14, category: 'iphone' },
+            
+            // iPhone 14 Series
+            { name: 'iPhone 14 Pro Max', specs: '256GB • Space Black • Unlocked', condition: 'Excellent', retail: 999, price: 580, image: 'https://supercells.co.za/wp-content/uploads/2023/05/14-pro-max-128gb.jpg', stock: 12, category: 'iphone' },
+            { name: 'iPhone 14 Pro', specs: '256GB • Space Black • Unlocked', condition: 'Like New', retail: 799, price: 480, image: 'https://istorepreowned.co.za/media/catalog/product/cache/7cbfd4bf9761b066f119e95af17e67c5/i/p/iphone_14_pro_space_black_pdp_image_position-4__eaen_5_1_1_1_1_1_1.jpg', stock: 15, category: 'iphone' },
+            { name: 'iPhone 14 Pro', specs: '128GB • Deep Purple • Unlocked', condition: 'Good', retail: 750, price: 450, image: 'https://m-cdn.phonearena.com/images/article/145949-wide-two_1200/Recent-survey-shows-people-are-loving-the-Deep-Purple-iPhone-14-Pro.jpg', stock: 20, category: 'iphone' },
+            
+            // iPhone 13 & 12 Series
+            { name: 'iPhone 13', specs: '128GB • Midnight • Unlocked', condition: 'Good', retail: 699, price: 380, image: 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRndDBTKVv7XNK0k0wDN4L0-8h8F_MjgXYFDd_5MBB9hHFaxveQC84ChFTOhDAA6LjGhv6Mmw-A9a51CXWWiUsPn2Uq1QxcyUgLbVznsQRF9KgMMmr7EBONpi0HDNBV244NnAQHt-A&usqp=CAc', stock: 25, category: 'iphone' },
+            { name: 'iPhone 12 Pro Max', specs: '128GB • Gold • Unlocked', condition: 'Good', retail: 599, price: 340, image: 'https://cdn.shopify.com/s/files/1/0733/5867/2170/files/905ac66f-3559-4008-827d-13f2f0925239.jpg?v=1744831843', stock: 29, category: 'iphone' },
+            { name: 'iPhone 12', specs: '128GB • Blue • Unlocked', condition: 'Good', retail: 499, price: 280, image: 'https://www.apple.com/newsroom/images/product/iphone/geo/apple_iphone-12_2-up_geo_10132020_inline.jpg.large.jpg', stock: 14, category: 'iphone' },
+            
+            // Samsung Galaxy Series
+            { name: 'Samsung Galaxy S25 Ultra', specs: '512GB • Titanium Black • Unlocked', condition: 'Excellent', retail: 1420, price: 920, image: 'https://cdn.neowin.com/news/images/uploaded/2024/11/1731044582_galaxy-s25-ultra.jpg', stock: 12, category: 'galaxy' },
+            { name: 'Samsung Galaxy S25 Ultra', specs: '256GB • Titanium Gray • Unlocked', condition: 'Like New', retail: 1300, price: 845, image: 'https://images.moneycontrol.com/static-mcnews/2024/10/20241021090447_S24-Ultra.jpg?impolicy=website&width=1280&height=720', stock: 18, category: 'galaxy' },
+            { name: 'Samsung Galaxy S24 Ultra', specs: '512GB • Titanium Black • Unlocked', condition: 'Excellent', retail: 1300, price: 800, image: 'https://uk.static.webuy.com/product_images/Phones/Phones%20Android/SSAMS928B512GTGUNLB_l.jpg', stock: 14, category: 'galaxy' },
+            { name: 'Samsung Galaxy S24 Ultra', specs: '256GB • Titanium Violet • Unlocked', condition: 'Like New', retail: 1200, price: 720, image: 'https://images.samsung.com/my/smartphones/galaxy-s24-ultra/images/galaxy-s24-ultra-highlights-color-titanium-violet-back-mo.jpg?imbypass=true', stock: 16, category: 'galaxy' },
+            { name: 'Galaxy Tab S9 Ultra', specs: '256GB • Graphite • S Pen', condition: 'Excellent', retail: 1200, price: 750, image: 'https://images.samsung.com/is/image/samsung/p6pim/za/sm-x916bzaaafa/gallery/za-galaxy-tab-s-sm-x916bzaaafa-front-graphite-538073064?$684_547_PNG$', stock: 9, category: 'galaxy' },
+            { name: 'Galaxy Tab S9', specs: '128GB • Beige • S Pen', condition: 'Like New', retail: 800, price: 480, image: 'https://snapcraze.co.za/wp-content/uploads/2024/08/tab-s9-ultra-2.jpg', stock: 15, category: 'galaxy' },
+            
+            // MacBooks
+            { name: 'MacBook Pro 16"', specs: 'M3 Max • 1TB • Space Black', condition: 'Excellent', retail: 3499, price: 2100, image: 'https://images.macrumors.com/t/ty6Ia6BV-3k2q-jUoGg6KVKMvMI=/1200x1200/smart/article-new/2024/10/M4-MacBook-Pro-Thumb-2.jpg', stock: 5, category: 'macbook' },
+            { name: 'MacBook Pro 16"', specs: 'M3 Pro • 512GB • Space Black', condition: 'Like New', retail: 2499, price: 1500, image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&auto=format&fit=crop&q=80', stock: 8, category: 'macbook' },
+            { name: 'MacBook Pro 14"', specs: 'M3 Pro • 1TB • Silver', condition: 'Like New', retail: 2399, price: 1440, image: 'https://istorepreowned.co.za/media/catalog/product/cache/7cbfd4bf9761b066f119e95af17e67c5/m/a/macbook_pro_m2_chip_hero_horizontal_screen__usen_6_1.jpg', stock: 7, category: 'macbook' },
+            { name: 'MacBook Pro 14"', specs: 'M3 • 512GB • Space Gray', condition: 'Excellent', retail: 1999, price: 1200, image: 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&auto=format&fit=crop&q=80', stock: 12, category: 'macbook' },
+            { name: 'MacBook Air M2', specs: '512GB • Starlight', condition: 'Like New', retail: 1399, price: 840, image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=400&auto=format&fit=crop&q=80', stock: 8, category: 'macbook' },
+            { name: 'MacBook Air M2', specs: '256GB • Midnight', condition: 'Excellent', retail: 1199, price: 720, image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=400&auto=format&fit=crop&q=80', stock: 10, category: 'macbook' },
+            
+            // iPads
+            { name: 'iPad Pro 13"', specs: 'M4 • 512GB • Silver', condition: 'Like New', retail: 1499, price: 900, image: 'https://www.digicape.co.za/image/cache/catalog/_products/2024/ipad/13%20Pro/iPad_Pro_13_M4_Cell_Space_Black_0-1000x1000.jpg', stock: 5, category: 'ipad' },
+            { name: 'iPad Pro 13"', specs: 'M4 • 256GB • Space Black', condition: 'Excellent', retail: 1299, price: 780, image: 'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT-mt_YMihDddYbcuMui0dZIyCTlmUDpa1sl_MAIqxm0qGrm11jDYo7HF_UalxrLT72hXSuF_0Ot1a-03Gtjgvcc7qy3joctb40tgcnznrC8qVYuHvLlw3HnSeFjVt0Q9OIKde3kA&usqp=CAc', stock: 7, category: 'ipad' },
+            { name: 'iPad Pro 11"', specs: 'M4 • 256GB • Space Black', condition: 'Excellent', retail: 999, price: 600, image: 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTsVlLyhIB2zPltd5ER83CTpZXqiFDZYfYvIl_BFNrl_wZh40BNXtRAkd_heNlEozAjXmR_EwH8vVZLhTS9nbe-7hKQHf31-hCj7oUL74tf8ir9nGJ4rhTQfnI-HBj6ddyJCjv7AA&usqp=CAc', stock: 10, category: 'ipad' },
+            { name: 'iPad Air M2', specs: '256GB • Blue', condition: 'Excellent', retail: 749, price: 450, image: 'https://images.indianexpress.com/2024/05/apple-ipad-air-m2.jpg', stock: 12, category: 'ipad' },
+            { name: 'iPad Air M2', specs: '128GB • Starlight', condition: 'Like New', retail: 599, price: 360, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh8gU2EZqLof7A3RHfbOJpSMCD_x9t6bdlGw&s', stock: 16, category: 'ipad' },
+            
+            // TVs (Biggest to smallest)
+            { name: 'Samsung 115" QN90F', specs: '115" • 4K • Neo QLED', condition: 'Like New', retail: 27000, price: 16200, image: 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQQfcNxH3ajFzSfD-DWZCSlQHcmX8VKTenAWPhe0ycJUvQhJR9hJTS24L3NpMnc9SEHLy6SEi4ZGr8kFMJActZ_Ei1nAaGQ-YECGwej-Tp6Ed0AnenI7GEo', stock: 1, category: 'tv' },
+            { name: 'Samsung 100" Neo QLED 4K', specs: 'QN90F • 4K • Quantum HDR', condition: 'Like New', retail: 10000, price: 6000, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQD0CGC5C1TtGj3tAewyAIRJLntx_25VUbWQA&s', stock: 8, category: 'tv' },
+            { name: 'Samsung 98" Crystal UHD', specs: 'DU9000 • 4K • Crystal', condition: 'Like New', retail: 1599, price: 960, image: 'https://image-us.samsung.com/SamsungUS/home/television-home-theater/tvs/crystal-uhd-tvs/10142024/UN98DU9000FXZA-S.COM_Version_1_V01.jpg?$product-details-jpg$', stock: 8, category: 'tv' },
+            { name: 'Samsung 85" Neo QLED 8K', specs: 'QN900F • 8K • Smart TV', condition: 'Like New', retail: 8000, price: 4800, image: 'https://images.samsung.com/is/image/samsung/p6pim/za/qa85qn900dkxxa/gallery/za-qled-qn900d-qa85qn900dkxxa-541556427?$684_547_PNG$', stock: 3, category: 'tv' },
+            { name: 'Samsung 75" Neo QLED 4K', specs: 'QN90F • 4K • Mini LED', condition: 'Excellent', retail: 3000, price: 1800, image: 'https://images.samsung.com/is/image/samsung/p6pim/za/qa85qn900dkxxa/gallery/za-qled-qn900d-qa85qn900dkxxa-541556427?$684_547_PNG$', stock: 6, category: 'tv' },
+            
+            // iMacs
+            { name: 'iMac 24" M3', specs: '512GB • Blue', condition: 'Like New', retail: 1699, price: 1020, image: 'https://fdn.gsmarena.com/imgroot/news/23/10/apple-24-inch-m3-imac-official/inline/-1200/gsmarena_008.jpg', stock: 4, category: 'imac' },
+            { name: 'iMac 24" M3', specs: '256GB • Silver', condition: 'Excellent', retail: 1499, price: 900, image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&auto=format&fit=crop&q=80', stock: 5, category: 'imac' }
+        ].map(product => ({
             ...product,
-            discount: getRandomDiscount()
-        })).map(product => ({
-            ...product,
-            price: calculateSalePrice(product.retail, product.discount)
+            discount: Math.round(((product.retail - product.price) / product.retail) * 100),
+            salePrice: product.price // Add salePrice for cart compatibility
         }));
 
         // Cart functionality
