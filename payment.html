@@ -3,6 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Add in <head> section -->
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'pl,en'
+      }, 'google_translate_element');
+      
+      // Auto-translate to Polish
+      setTimeout(function() {
+        var select = document.querySelector('.goog-te-combo');
+        if (select && select.value !== 'pl') {
+          select.value = 'pl';
+          select.dispatchEvent(new Event('change'));
+        }
+      }, 1000);
+    }
+    
+    // Set Polish as default
+    document.cookie = 'googtrans=/en/pl; path=/';
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+    <!-- Add CSS to hide Google branding (optional) -->
+    <style>
+    .goog-te-banner-frame { display: none !important; }
+    body { top: 0px !important; }
+    #google_translate_element { display: none; }
+    </style>
     <title>Checkout - WeSelliPhones</title>
     <script type="text/javascript">
         function googleTranslateElementInit() {
